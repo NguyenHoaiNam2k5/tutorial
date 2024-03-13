@@ -13,6 +13,8 @@ Ltexture gTexture;
 Ltexture Rcharacter;
 //character left
 Ltexture Lcharacter;
+//character
+Ltexture character;
 
 SDL_Rect Src[Walking_frames];
 
@@ -101,7 +103,7 @@ bool loadMedia()
         std::cout << "ko the tai texture" << SDL_GetError();
         success = 0;
     }
-    if(!Rcharacter.loadFromFile("image/Rcharacter.png", gRenderer) || !Lcharacter.loadFromFile("image/Lcharacter.png", gRenderer))
+    if(!Rcharacter.loadFromFile("image/Rcharacter.png", gRenderer) || !Lcharacter.loadFromFile("image/Lcharacter.png", gRenderer) || !character.loadFromFile("image/character.png", gRenderer))
     {
         std::cout << "ko tai duoc nhan vat" << SDL_GetError();
         success = 0;
@@ -187,7 +189,7 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
-					gTexture.render(( SCREEN_WIDTH - currentClip->w ) / 2, ( SCREEN_HEIGHT - currentClip->h ) / 2, gRenderer, NULL);
+					character.render(( SCREEN_WIDTH - currentClip->w ) / 2, ( SCREEN_HEIGHT - currentClip->h ) / 2, gRenderer, currentClip);
 				}
 
                 //update screen
@@ -210,6 +212,7 @@ int main(int argc, char* argv[])
     gTexture.free();
     Rcharacter.free();
     Lcharacter.free();
+    character.free();
 	return 0;
 }
 
