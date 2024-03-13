@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="20_min_till_dawn" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/20_min_till_dawn" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/20_min_till_dawn" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="C:/mingw_dev_lib/include/SDL2" />
+			<Add directory="C:/sdl_image/include/SDL2" />
+			<Add directory="C:/SDL_ttf/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf" />
+			<Add directory="C:/mingw_dev_lib/lib" />
+			<Add directory="C:/sdl_image/lib" />
+			<Add directory="C:/SDL_ttf/lib" />
+		</Linker>
+		<Unit filename="commonFunc.cpp" />
+		<Unit filename="commonFunc.h" />
+		<Unit filename="const.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
