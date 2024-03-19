@@ -28,7 +28,7 @@ class Ltexture
         //lay kich thuoc hinh anh
         int getWidth();
         int getHeight();
-    private:
+//    private:
         //the actual hardware texture
         SDL_Texture* mTexture;
 
@@ -37,8 +37,14 @@ class Ltexture
         int mHeight;
 };
 
+////character right
+//Ltexture Rcharacter;
+////character left
+//Ltexture Lcharacter;
+////character
+//Ltexture character;
 
 #endif // TEXTURE_H
 
-
+void close(SDL_Window* gWindow, SDL_Renderer* gRenderer);
 

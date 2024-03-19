@@ -40,6 +40,8 @@
 			<Add directory="C:/sdl_image/lib" />
 			<Add directory="C:/SDL_ttf/lib" />
 		</Linker>
+		<Unit filename="character.cpp" />
+		<Unit filename="character.h" />
 		<Unit filename="commonFunc.cpp" />
 		<Unit filename="commonFunc.h" />
 		<Unit filename="const.h" />

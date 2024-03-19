@@ -454,31 +454,43 @@
 	"texture.h"
 	"const.h"
 
-1710324621 source:d:\cpp\btl ltnc\commonfunc.cpp
+1710856758 source:d:\cpp\btl ltnc\commonfunc.cpp
 	"texture.h"
 	"const.h"
 	"commonFunc.h"
 
-1710322298 d:\cpp\btl ltnc\texture.h
+1710856385 d:\cpp\btl ltnc\texture.h
 	"const.h"
 
-1710337037 d:\cpp\btl ltnc\const.h
+1710856153 d:\cpp\btl ltnc\const.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<string>
+	<fstream>
 
-1710324675 d:\cpp\btl ltnc\commonfunc.h
+1710856758 d:\cpp\btl ltnc\commonfunc.h
 	"texture.h"
 	"const.h"
 
-1710324155 source:d:\cpp\btl ltnc\texture.cpp
+1710856398 source:d:\cpp\btl ltnc\texture.cpp
 	"texture.h"
 	"const.h"
 
-1710348479 source:d:\cpp\btl ltnc\main.cpp
+1710867874 source:d:\cpp\btl ltnc\main.cpp
 	"texture.h"
 	"const.h"
 	"commonFunc.h"
+	"character.h"
+
+1710868001 source:d:\cpp\btl ltnc\character.cpp
+	"const.h"
+	"character.h"
+	"texture.h"
+	"commonFunc.h"
+
+1710868001 d:\cpp\btl ltnc\character.h
+	"const.h"
+	"texture.h"
 
