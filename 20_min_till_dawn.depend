@@ -459,38 +459,51 @@
 	"const.h"
 	"commonFunc.h"
 
-1710856385 d:\cpp\btl ltnc\texture.h
+1710950560 d:\cpp\btl ltnc\texture.h
 	"const.h"
 
-1710904251 d:\cpp\btl ltnc\const.h
+1710947896 d:\cpp\btl ltnc\const.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
 	<string>
 	<fstream>
+	<cmath>
 
 1710856758 d:\cpp\btl ltnc\commonfunc.h
 	"texture.h"
 	"const.h"
 
-1710856398 source:d:\cpp\btl ltnc\texture.cpp
+1710951621 source:d:\cpp\btl ltnc\texture.cpp
 	"texture.h"
 	"const.h"
 
-1710900670 source:d:\cpp\btl ltnc\main.cpp
+1710951786 source:d:\cpp\btl ltnc\main.cpp
 	"texture.h"
 	"const.h"
 	"commonFunc.h"
 	"character.h"
+	"weapon.h"
 
-1710904283 source:d:\cpp\btl ltnc\character.cpp
+1710951515 source:d:\cpp\btl ltnc\character.cpp
 	"const.h"
 	"character.h"
 	"texture.h"
 	"commonFunc.h"
+	"weapon.h"
 
-1710903542 d:\cpp\btl ltnc\character.h
+1710951555 d:\cpp\btl ltnc\character.h
 	"const.h"
 	"texture.h"
+	"weapon.h"
+
+1710950974 source:d:\cpp\btl ltnc\weapon.cpp
+	"texture.h"
+	"const.h"
+	"weapon.h"
+
+1710950642 d:\cpp\btl ltnc\weapon.h
+	"texture.h"
+	"const.h"
 

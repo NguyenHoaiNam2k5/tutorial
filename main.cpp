@@ -2,6 +2,7 @@
 #include "const.h"
 #include "commonFunc.h"
 #include "character.h"
+#include "weapon.h"
 
 //hien thi cua so
 SDL_Window * gWindow = NULL;
@@ -16,6 +17,9 @@ Ltexture Char[NUM_CHAR];
 //tile map
 Ltexture gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
+
+//weapon
+Ltexture gWeapon;
 
 SDL_Rect Src[Walking_frames];
 
@@ -72,6 +76,13 @@ bool loadMedia(Tile* tiles[])
     if(!setTiles(tiles, gTileClips))
     {
         std::cout << "ko tai duoc tile set";
+        success = 0;
+    }
+
+    //load weapon
+    if(!gWeapon.loadFromFile("image/Rweapon.png", gRenderer))
+    {
+        std::cout << "ko tai duoc weapon";
         success = 0;
     }
     return success;
@@ -159,8 +170,6 @@ int main(int argc, char* argv[])
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear( gRenderer );
 
-
-
 				//render background
 
                 SDL_Rect* currentClip = &Src[ frame / 10 ];
@@ -175,7 +184,7 @@ int main(int argc, char* argv[])
 					}
 					else
                     {
-                        Char1.handleEvent(e);
+                        Char1.handleEvent(e, gRenderer, gWeapon);
                     }
 
 
@@ -205,7 +214,7 @@ int main(int argc, char* argv[])
                     tileSet[i]->render(camera, gTileTexture, gTileClips, gRenderer);
                 }
 
-                Char1.render(gRenderer, camera, Char, currentClip);
+                Char1.render(gRenderer, camera, Char, currentClip, gWeapon);
 
                 //update screen
 				SDL_RenderPresent(gRenderer);

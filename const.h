@@ -7,6 +7,7 @@
 #include <SDL_ttf.h>
 #include <string>
 #include <fstream>
+#include <cmath>
 
 
 
@@ -31,4 +32,7 @@ const int TILE_wall = 01;
 //const int TILE_tree1 = 02;
 //const int TILE_tree2 = 03;
 
+
+const int RWEAPON = 0;
+const int LWEAPON = 1;
 #endif // CONST_H

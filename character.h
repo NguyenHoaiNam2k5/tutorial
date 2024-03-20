@@ -1,6 +1,7 @@
 #pragma once
 #include "const.h"
 #include "texture.h"
+#include "weapon.h"
 
 class Tile
 {
@@ -18,6 +19,7 @@ public:
     SDL_Rect getBox();
 
 private:
+
     //the attributes of the tile
     SDL_Rect mBox;
 
@@ -40,7 +42,7 @@ public:
     Character();
 
     //takes key presses and adjusts the character's velocity
-    void handleEvent(SDL_Event& e);
+    void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon);
 
     //move the character and checks collision
     void move(Tile *tiles[]);
@@ -49,11 +51,14 @@ public:
     void setCamera(SDL_Rect& camera);
 
     //Shows the character on the screen
-    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip);
+    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon);
 
-
+//    void setWeapon();
 
 private:
+//    //weapon
+//    weapon revolver;
+
     //collision box of the character
     SDL_Rect mBox;
 
