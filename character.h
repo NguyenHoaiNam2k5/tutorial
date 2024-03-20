@@ -30,11 +30,11 @@ class Character
 {
 public:
     //kich thuoc nhan vat
-    static const int CHARACTER_WIDTH = 20;
-    static const int CHARACTER_HEIGHT = 20;
+    static const int CHARACTER_WIDTH = 16;
+    static const int CHARACTER_HEIGHT = 26;
 
     //toc do toi da
-    static const int CHARACTER_VEL = 10;
+    static const int CHARACTER_VEL = 1;
 
     //ham khoi tao
     Character();
@@ -49,7 +49,7 @@ public:
     void setCamera(SDL_Rect& camera);
 
     //Shows the character on the screen
-    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture& gDotTexture);
+    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip);
 
 
 
@@ -60,10 +60,12 @@ private:
     //toc do nhan vat
     int mVelX, mVelY;
 
-//    //Dot's collision box
+//    //Character's collision box
 //    SDL_Rect mCollider;
 };
 
 bool touchesWall(SDL_Rect box, Tile* tiles[]);
+
+bool touchesTree(SDL_Rect, Tile* tiles[]);
 
 bool setTiles( Tile* tiles[], SDL_Rect gTileClips[] );

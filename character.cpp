@@ -45,8 +45,8 @@ SDL_Rect Tile::getBox()
 Character::Character()
 {
     // khoi tao toa do
-    mBox.x = 0;
-    mBox.y = 0;
+    mBox.x = SCREEN_WIDTH / 2;
+    mBox.y = SCREEN_HEIGHT / 2 + 20;
 
     //set collision box dimension
     mBox.w = CHARACTER_WIDTH;
@@ -60,7 +60,7 @@ Character::Character()
 void Character::handleEvent(SDL_Event& e)
 {
     //if a key was pressed
-    if(e.type == SDL_KEYDOWN )
+    if(e.type == SDL_KEYDOWN && e.key.repeat == 0)
     {
         //Adjust the velocity
         switch(e.key.keysym.sym)
@@ -80,7 +80,7 @@ void Character::handleEvent(SDL_Event& e)
         }
     }
     //if key was released
-    else if(e.type == SDL_KEYUP)
+     if(e.type == SDL_KEYUP && e.key.repeat == 0)
     {
 
         //dieu chinh toc do
@@ -120,11 +120,24 @@ void Character::move(Tile *tiles[])
 //        mCollider.y = mPosY;
     }
 }
-void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture& gDotTexture)
+void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip)
 {
+    const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
+    if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
+    {
+        Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
+    }
+    else if( currentKeyStates[ SDL_SCANCODE_DOWN ] || currentKeyStates[ SDL_SCANCODE_LEFT ] )
+    {
+        Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
+    }
+    else
+    {
+        Char[2].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
+    }
 
-    //show the dot relative to the camera
-    gDotTexture.render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, NULL);
+//    //show the dot relative to the camera
+//    gDotTexture.render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, NULL);
 }
 
 void Character::setCamera(SDL_Rect& camera)
@@ -132,6 +145,9 @@ void Character::setCamera(SDL_Rect& camera)
     //Center the camera over the dot
     camera.x = ( mBox.x + CHARACTER_WIDTH / 2) - SCREEN_WIDTH / 2;
     camera.y = ( mBox.y + CHARACTER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
+//
+//    camera.x = 300;
+//    camera.y = 300;
 
     //keep the camera in bounds
     if(camera.x < 0)
@@ -169,6 +185,21 @@ bool touchesWall(SDL_Rect box, Tile* tiles[])
     }
     return 0;
 }
+
+//bool touchesTree(SDL_Rect box, Tile* tiles[])
+//{
+//    for(int i = 0; i < TOTAL_TILES; i++)
+//    {
+//        if(tiles[i]->getType() == TILE_tree1)
+//        {
+//            if(checkCollision(box, tiles[i]->getBox()))
+//            {
+//                return true;
+//            }
+//        }
+//    }
+//    return false;
+//}
 
 
 bool setTiles( Tile* tiles[], SDL_Rect gTileClips[] )
@@ -245,9 +276,19 @@ bool setTiles( Tile* tiles[], SDL_Rect gTileClips[] )
 			gTileClips[ TILE_background ].h = TILE_HEIGHT;
 
 			gTileClips[ TILE_wall ].x = 0;
-			gTileClips[ TILE_wall ].y = 64;
+			gTileClips[ TILE_wall ].y = 32;
 			gTileClips[ TILE_wall ].w = TILE_WIDTH;
 			gTileClips[ TILE_wall ].h = TILE_HEIGHT;
+//
+//			gTileClips[ TILE_tree1 ].x = 32;
+//			gTileClips[ TILE_tree1 ].y = 32;
+//			gTileClips[ TILE_tree1 ].w = TILE_WIDTH;
+//			gTileClips[ TILE_tree1 ].h = TILE_HEIGHT;
+//
+//			gTileClips[ TILE_tree2 ].x = 32;
+//			gTileClips[ TILE_tree2 ].y = 0;
+//			gTileClips[ TILE_tree2 ].w = TILE_WIDTH;
+//			gTileClips[ TILE_tree2 ].h = TILE_HEIGHT;
 
 		}
 	}

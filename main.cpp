@@ -11,7 +11,7 @@ SDL_Renderer * gRenderer = NULL;
 
 //character
 Ltexture Char[NUM_CHAR];
-Ltexture gDotTexture;
+//Ltexture gDotTexture;
 
 //tile map
 Ltexture gTileTexture;
@@ -40,26 +40,26 @@ bool loadMedia(Tile* tiles[])
     {
         Src[ 0 ].x =   0;
         Src[ 0 ].y =   0;
-        Src[ 0 ].w =  64;
-        Src[ 0 ].h =  64;
+        Src[ 0 ].w =  32;
+        Src[ 0 ].h =  32;
 
-        Src[ 1 ].x =  64;
+        Src[ 1 ].x =  32;
         Src[ 1 ].y =   0;
-        Src[ 1 ].w =  64;
-        Src[ 1 ].h =  64;
+        Src[ 1 ].w =  32;
+        Src[ 1 ].h =  32;
 
-        Src[ 2 ].x =  128;
+        Src[ 2 ].x =  64;
         Src[ 2 ].y =   0;
-        Src[ 2 ].w =  64;
-        Src[ 2 ].h =  64;
+        Src[ 2 ].w =  32;
+        Src[ 2 ].h =  32;
     }
 
-    //load prompt texture
-    if(!gDotTexture.loadFromFile("image/dot.png", gRenderer))
-    {
-        std::cout << "ko the tai prompt texture" << SDL_GetError();
-        success = 0;
-    }
+//    //load prompt texture
+//    if(!gDotTexture.loadFromFile("image/dot.png", gRenderer))
+//    {
+//        std::cout << "ko the tai prompt texture" << SDL_GetError();
+//        success = 0;
+//    }
 
     //load tile texture
     if(!gTileTexture.loadFromFile("image/tileMap.png", gRenderer))
@@ -144,6 +144,10 @@ int main(int argc, char* argv[])
 			//Event handler
 			SDL_Event e;
 
+			Character Char1;
+
+            SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+
 			//current animation frame
 			int frame = 0;
 
@@ -155,9 +159,7 @@ int main(int argc, char* argv[])
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear( gRenderer );
 
-				Character Char1;
 
-                SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 				//render background
 
@@ -171,8 +173,12 @@ int main(int argc, char* argv[])
 					{
 						quit = true;
 					}
+					else
+                    {
+                        Char1.handleEvent(e);
+                    }
 
-					Char1.handleEvent(e);
+
 
                 }
 //
@@ -199,19 +205,19 @@ int main(int argc, char* argv[])
                     tileSet[i]->render(camera, gTileTexture, gTileClips, gRenderer);
                 }
 
-                Char1.render(gRenderer, camera, gDotTexture);
+                Char1.render(gRenderer, camera, Char, currentClip);
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
 
 				//Go to next frame
-//				++frame;
-//
-//				//cycle animation
-//				if(frame / 10 >= Walking_frames)
-//                {
-//                    frame = 0;
-//                }
+				++frame;
+
+				//cycle animation
+				if(frame / 10 >= Walking_frames)
+                {
+                    frame = 0;
+                }
 			}
         }
 	}
