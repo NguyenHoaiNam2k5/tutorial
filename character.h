@@ -3,6 +3,7 @@
 #include "texture.h"
 #include "weapon.h"
 
+
 class Tile
 {
 public:
@@ -45,7 +46,7 @@ public:
     void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon);
 
     //move the character and checks collision
-    void move(Tile *tiles[]);
+    void move(Tile *tiles[], SDL_Rect& camera);
 
     //camera
     void setCamera(SDL_Rect& camera);
@@ -56,8 +57,8 @@ public:
 //    void setWeapon();
 
 private:
-//    //weapon
-//    weapon revolver;
+    //weapon
+    weapon revolver;
 
     //collision box of the character
     SDL_Rect mBox;

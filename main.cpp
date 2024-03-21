@@ -2,7 +2,7 @@
 #include "const.h"
 #include "commonFunc.h"
 #include "character.h"
-#include "weapon.h"
+
 
 //hien thi cua so
 SDL_Window * gWindow = NULL;
@@ -29,12 +29,6 @@ bool loadMedia(Tile* tiles[])
 {
     //Loading success flag
 	bool success = true;
-//    //load prompt texture
-//    if(!gTexture.loadFromFile("image/bg2.jpg", gRenderer))
-//    {
-//        std::cout << "ko the tai texture" << SDL_GetError();
-//        success = 0;
-//    }
     if(!Char[0].loadFromFile("image/Rcharacter.png", gRenderer) || !Char[1].loadFromFile("image/Lcharacter.png", gRenderer) || !Char[2].loadFromFile("image/character.png", gRenderer))
     {
         std::cout << "ko tai duoc nhan vat" << SDL_GetError();
@@ -57,13 +51,6 @@ bool loadMedia(Tile* tiles[])
         Src[ 2 ].w =  32;
         Src[ 2 ].h =  32;
     }
-
-//    //load prompt texture
-//    if(!gDotTexture.loadFromFile("image/dot.png", gRenderer))
-//    {
-//        std::cout << "ko the tai prompt texture" << SDL_GetError();
-//        success = 0;
-//    }
 
     //load tile texture
     if(!gTileTexture.loadFromFile("image/tileMap.png", gRenderer))
@@ -170,8 +157,6 @@ int main(int argc, char* argv[])
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear( gRenderer );
 
-				//render background
-
                 SDL_Rect* currentClip = &Src[ frame / 10 ];
 
 				//Handle events on queue
@@ -186,26 +171,9 @@ int main(int argc, char* argv[])
                     {
                         Char1.handleEvent(e, gRenderer, gWeapon);
                     }
-
-
-
                 }
-//
-//                const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
-//                if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
-//                {
-//                    Char[0].render(Char1.mBox.x - camera.x, Char1.mBox.y - camera.y, gRenderer, currentClip);
-//                }
-//                else if( currentKeyStates[ SDL_SCANCODE_DOWN ] || currentKeyStates[ SDL_SCANCODE_LEFT ] )
-//                {
-//                    Char[1].render(Char1.mBox.x - camera.x, Char1.mBox.y - camera.y, gRenderer, currentClip);
-//                }
-//                else
-//                {
-//                    Char[2].render(Char1.mBox.x - camera.x, Char1.mBox.y - camera.y, gRenderer, currentClip);
-//                }
                 //move character
-                Char1.move(tileSet);
+                Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
 
                 //render level
@@ -229,16 +197,23 @@ int main(int argc, char* argv[])
                 }
 			}
         }
+        //Free resources and close SDL
+        close(gWindow, gRenderer);
+        gTileTexture.free();
+        gWeapon.free();
+        for(int i = 0; i < NUM_CHAR; i++)
+        {
+            Char[i].free();
+        }
+        for( int i = 0; i < TOTAL_TILES; ++i )
+        {
+            if( tileSet[ i ] != NULL )
+            {
+                delete tileSet[ i ];
+                tileSet[ i ] = NULL;
+            }
+        }
 	}
-
-	//Free resources and close SDL
-	close(gWindow, gRenderer);
-	gTileTexture.free();
-    for(int i = 0; i < NUM_CHAR; i++)
-    {
-        Char[i].free();
-    }
-
 	return 0;
 }
 

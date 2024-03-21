@@ -2,7 +2,7 @@
 #include "character.h"
 #include "texture.h"
 #include "commonFunc.h"
-#include "weapon.h"
+
 
 Tile::Tile(int x, int y, int tileType)
 {
@@ -57,14 +57,7 @@ Character::Character()
     mVelX = 0;
     mVelY = 0;
 
-//    //khoi tao weapon
-//    weapon* revolver = new weapon();
 }
-//void Character::setWeapon()
-//{
-//    revolver->set_x_val(mBox.x);
-//    revolver->set_y_val(mBox.y);
-//}
 
 void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon)
 {
@@ -101,10 +94,11 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
             case SDLK_RIGHT: mVelX -= CHARACTER_VEL; break;
         }
     }
-//    revolver.handleEvent(e, gRenderer, gWeapon);
+
+    revolver.handleEvent(e);
 }
 
-void Character::move(Tile *tiles[])
+void Character::move(Tile *tiles[], SDL_Rect& camera)
 {
     //move the character left or right
     mBox.x += mVelX;
@@ -126,52 +120,25 @@ void Character::move(Tile *tiles[])
         //move back
         mBox.y -= mVelY;
     }
-//
-//    //update weapon
-//    revolver.set_x_val(mBox.x);
-//    revolver.set_y_val(mBox.y);
+    revolver.set_x_val(mBox.x - camera.x);
+    revolver.set_y_val(mBox.y - camera.y);
 }
 void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon)
 {
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
-    if(currentKeyStates[ SDL_SCANCODE_UP ] && currentKeyStates[ SDL_SCANCODE_LEFT ])
-    {
-        Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, 45, NULL, SDL_FLIP_HORIZONTAL);
-    }
-    else if(currentKeyStates[ SDL_SCANCODE_DOWN ] && currentKeyStates[ SDL_SCANCODE_RIGHT ])
+    if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
     {
         Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, 45);
-    }
-    else if(currentKeyStates[ SDL_SCANCODE_UP ] && currentKeyStates[ SDL_SCANCODE_RIGHT ])
-    {
-        Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, -45);
-    }
-    else if(currentKeyStates[ SDL_SCANCODE_DOWN ] && currentKeyStates[ SDL_SCANCODE_LEFT ])
-    {
-        Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, -45, NULL, SDL_FLIP_HORIZONTAL);
-    }
-    else if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
-    {
-        Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL);
     }
     else if( currentKeyStates[ SDL_SCANCODE_DOWN ] || currentKeyStates[ SDL_SCANCODE_LEFT ] )
     {
         Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, 0, NULL, SDL_FLIP_HORIZONTAL);
     }
     else
     {
         Char[2].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
-        gWeapon.render(mBox.x - camera.x - 3, mBox.y - camera.y, gRenderer, NULL, 90);
     }
-
-//    //show the dot relative to the camera
-//    gDotTexture.render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, NULL);
+    revolver.render(gRenderer, gWeapon);
 }
 
 void Character::setCamera(SDL_Rect& camera)
@@ -179,9 +146,6 @@ void Character::setCamera(SDL_Rect& camera)
     //Center the camera over the dot
     camera.x = ( mBox.x + CHARACTER_WIDTH / 2) - SCREEN_WIDTH / 2;
     camera.y = ( mBox.y + CHARACTER_HEIGHT / 2) - SCREEN_HEIGHT / 2;
-//
-//    camera.x = 300;
-//    camera.y = 300;
 
     //keep the camera in bounds
     if(camera.x < 0)
