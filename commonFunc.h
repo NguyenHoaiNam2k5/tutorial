@@ -12,6 +12,7 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer);
 
 bool checkCollision( SDL_Rect a, SDL_Rect b );
 
-
+//ttim y khi biet x va duong thang di qua diem do
+double timY(const int& x1, const int& y1, const int& x2, const int& y2, const int& x);
 
 #endif // COMMON_FUNC_H

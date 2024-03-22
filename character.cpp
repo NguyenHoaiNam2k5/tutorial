@@ -47,7 +47,7 @@ Character::Character()
 {
     // khoi tao toa do
     mBox.x = SCREEN_WIDTH / 2;
-    mBox.y = SCREEN_HEIGHT / 2 + 20;
+    mBox.y = SCREEN_HEIGHT / 2 ;
 
     //set collision box dimension
     mBox.w = CHARACTER_WIDTH;
@@ -120,10 +120,10 @@ void Character::move(Tile *tiles[], SDL_Rect& camera)
         //move back
         mBox.y -= mVelY;
     }
-    revolver.set_x_val(mBox.x - camera.x);
-    revolver.set_y_val(mBox.y - camera.y);
+    revolver.set_x_val(mBox.x - camera.x - 1);
+    revolver.set_y_val(mBox.y - camera.y );
 }
-void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon)
+void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet)
 {
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
@@ -139,6 +139,7 @@ void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[
         Char[2].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
     }
     revolver.render(gRenderer, gWeapon);
+    revolver.handleBullet(gRenderer, gBullet);
 }
 
 void Character::setCamera(SDL_Rect& camera)

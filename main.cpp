@@ -2,6 +2,7 @@
 #include "const.h"
 #include "commonFunc.h"
 #include "character.h"
+#include "imgTimer.h"
 
 
 //hien thi cua so
@@ -12,14 +13,16 @@ SDL_Renderer * gRenderer = NULL;
 
 //character
 Ltexture Char[NUM_CHAR];
-//Ltexture gDotTexture;
+//weapon
+Ltexture gWeapon;
+//bullet
+Ltexture gBullet;
 
 //tile map
 Ltexture gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 
-//weapon
-Ltexture gWeapon;
+
 
 SDL_Rect Src[Walking_frames];
 
@@ -72,6 +75,11 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc weapon";
         success = 0;
     }
+    if(!gBullet.loadFromFile("image/dot.png", gRenderer))
+    {
+        std::cout << "ko tai duoc bullet";
+        success = 0;
+    }
     return success;
 }
 
@@ -121,6 +129,7 @@ bool init()
 
 int main(int argc, char* argv[])
 {
+    ImpTimer fps_timer;
     //Start up SDL and create window
 	if( !init() )
 	{
@@ -152,6 +161,7 @@ int main(int argc, char* argv[])
 			//While application is running
 			while( !quit )
 			{
+			    fps_timer.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -182,13 +192,27 @@ int main(int argc, char* argv[])
                     tileSet[i]->render(camera, gTileTexture, gTileClips, gRenderer);
                 }
 
-                Char1.render(gRenderer, camera, Char, currentClip, gWeapon);
+                Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
 
+				int real_imp_time = fps_timer.get_ticks();
+				//std::cout << SDL_GetTicks() << std::endl;
+				int time_one_frame= 1000/FRAME_PER_SECOND;
+
+				if(real_imp_time < time_one_frame)
+                {
+                    int delay_time = time_one_frame - real_imp_time;
+                    if(delay_time >= 0)
+                    {
+                        SDL_Delay(delay_time);
+                    }
+                }
+
 				//Go to next frame
 				++frame;
+				std::cout << frame << " " << SDL_GetTicks() << std::endl;
 
 				//cycle animation
 				if(frame / 10 >= Walking_frames)

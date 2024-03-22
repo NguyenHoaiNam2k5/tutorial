@@ -2,37 +2,7 @@
 #include "const.h"
 #include "commonFunc.h"
 
-//bool loadMedia(Ltexture gTexture, SDL_Renderer* gRenderer)
-//{
-//    //Loading success flag
-//	bool success = true;
-//
-//    //open the font
-////    gFont = TTF_OpenFont("lazy.ttf", 28);
-////    if(gFont == NULL)
-////    {
-////        std::cout << "ko load duoc lazy font" << TTF_GetError();
-////    }
-////    else
-////    {
-////        //render text
-////        SDL_Color textColor = {0, 0, 0};
-////        if(!gTextTexture.loadFromRenderedText("the quick brown fox jumps over the lazy dog", textColor))
-////        {
-////            std::cout << "fail to render text texture";
-////            success = 0;
-////        }
-////    }
-//
-//    //load prompt texture
-//    if(!gTexture.loadFromFile("foo.png", gRenderer))
-//    {
-//        std::cout << "ko the tai texture" << SDL_GetError();
-//        success = 0;
-//    }
-//
-//    return success;
-//}
+
 
 void close(SDL_Window* gWindow, SDL_Renderer* gRenderer)
 {
@@ -55,48 +25,6 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer)
 	SDL_Quit();
 }
 
-//create window
-//bool init(SDL_Renderer* gRenderer, SDL_Window* gWindow)
-//{
-//    bool success = 1;
-//    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
-//    {
-//        success = 0;
-//        std::cout << "ko the khoi tao SDL" << SDL_GetError() << std::endl;
-//    }
-//    else
-//    {
-//        gWindow = SDL_CreateWindow("texture tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-//        if(gWindow == NULL)
-//        {
-//            std::cout << "ko the khoi tao cua so" << SDL_GetError() << std::endl;
-//            success = 0;
-//        }
-//        else
-//        {
-//            //create renderer
-//            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-//            if(gRenderer == NULL)
-//            {
-//                std::cout << "ko the khoi tao renderer" << SDL_GetError() << std::endl;
-//                success = 0;
-//            }
-//            else
-//            {
-//                //tao mau cho renderer
-//                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-//                //khoi tao PNG loading
-//                int imgFlags = IMG_INIT_PNG;
-//                if(!(IMG_Init(imgFlags) & imgFlags))
-//                {
-//                    std::cout << "ko the khoi tao SDL_image" << IMG_GetError() << std::endl;
-//                    success = 0;
-//                }
-//            }
-//        }
-//    }
-//    return success;
-//}
 
 bool checkCollision( SDL_Rect a, SDL_Rect b )
 {
@@ -141,6 +69,15 @@ bool checkCollision( SDL_Rect a, SDL_Rect b )
 
     //If none of the sides from A are outside B
     return true;
+}
+
+double timY(const int& x1, const int& y1, const int& x2, const int& y2, const int& x)
+{
+    double y;
+    double a=(y1-y2)/(x1-x2)*1.0;
+    double b = y1 - a*x1;
+    y = a*x+b;
+    return y;
 }
 
 

@@ -8,8 +8,10 @@
 #include <string>
 #include <fstream>
 #include <cmath>
+#include <vector>
+#include <utility>
 
-
+const int FRAME_PER_SECOND = 9;//fps
 
 const int SCREEN_WIDTH = 840;
 const int SCREEN_HEIGHT = 680;
@@ -20,6 +22,10 @@ const int Walking_frames = 3;
 
 const int LEVEL_WIDTH = 1280;
 const int LEVEL_HEIGHT = 960;
+
+//kich thuoc nhan vat
+const int CHARACTER_WIDTH = 16;
+const int CHARACTER_HEIGHT = 26;
 
 //Tile constants
 const int TILE_WIDTH = 32;

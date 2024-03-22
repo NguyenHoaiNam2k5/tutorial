@@ -16,6 +16,46 @@ weapon::weapon()
 void weapon::handleEvent(SDL_Event& e)
 {
     SDL_GetMouseState(&mouse.x, &mouse.y);
+    if(e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
+    {
+        bulletObject* p_bullet = new bulletObject();
+//        p_bullet->render(gRenderer, gBullet);
+
+        p_bullet->set_x_val(mBox.x+CHARACTER_WIDTH/2);
+        p_bullet->set_y_val(mBox.y+CHARACTER_HEIGHT/2);
+        p_bullet->set_is_move(1);
+
+        p_bullet_list_.push_back(p_bullet);
+    }
+}
+
+void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet)
+{
+    for(int i = 0; i < int(p_bullet_list_.size()); i++)
+    {
+        bulletObject* p_bullet = p_bullet_list_.at(i);
+        if(p_bullet != NULL)
+        {
+            const int mouseX = mouse.x;
+            const int mouseY = mouse.y;
+            p_bullet->set_mouseX_val(mouseX);
+            p_bullet->set_mouseY_val(mouseY);
+            if(p_bullet->get_is_move() == 1)
+            {
+                p_bullet->Move(mBox.x+CHARACTER_WIDTH/2, mBox.y+CHARACTER_HEIGHT/2);
+                p_bullet->render(gRenderer, gBullet);
+            }
+            else
+            {
+                p_bullet_list_.erase(p_bullet_list_.begin()+i);
+                if(p_bullet != NULL)
+                {
+                    delete p_bullet;
+                    p_bullet = NULL;
+                }
+            }
+        }
+    }
 }
 
 void weapon::render(SDL_Renderer* gRenderer, Ltexture& gWeapon)

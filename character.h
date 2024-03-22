@@ -32,9 +32,7 @@ private:
 class Character
 {
 public:
-    //kich thuoc nhan vat
-    static const int CHARACTER_WIDTH = 16;
-    static const int CHARACTER_HEIGHT = 26;
+
 
     //toc do toi da
     static const int CHARACTER_VEL = 1;
@@ -52,7 +50,7 @@ public:
     void setCamera(SDL_Rect& camera);
 
     //Shows the character on the screen
-    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon);
+    void render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet);
 
 //    void setWeapon();
 
