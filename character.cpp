@@ -20,7 +20,7 @@ Tile::Tile(int x, int y, int tileType)
 
 }
 
-void Tile::render(SDL_Rect camera, Ltexture& gTileTexture, SDL_Rect gTileClips[], SDL_Renderer* gRenderer)
+void Tile::render(SDL_FRect camera, Ltexture& gTileTexture, SDL_Rect gTileClips[], SDL_Renderer* gRenderer)
 {
 
     //if the tile is on screen
@@ -37,7 +37,7 @@ int Tile::getType()
     return mType;
 }
 
-SDL_Rect Tile::getBox()
+SDL_FRect Tile::getBox()
 {
     return mBox;
 }
@@ -80,6 +80,13 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
                 mVelX += CHARACTER_VEL;
                 break;
         }
+        //di chuyen cheo
+        if(mVelX != 0 && mVelY != 0)
+        {
+            mVelX /= sqrt(2);
+            mVelY /= sqrt(2);
+        }
+
     }
     //if key was released
      if(e.type == SDL_KEYUP && e.key.repeat == 0)
@@ -88,17 +95,18 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
         //dieu chinh toc do
         switch(e.key.keysym.sym)
         {
-            case SDLK_UP: mVelY += CHARACTER_VEL; break;
-            case SDLK_DOWN: mVelY -= CHARACTER_VEL; break;
-            case SDLK_LEFT: mVelX += CHARACTER_VEL; break;
-            case SDLK_RIGHT: mVelX -= CHARACTER_VEL; break;
+            case SDLK_UP: mVelY = 0; break;
+            case SDLK_DOWN: mVelY = 0; break;
+            case SDLK_LEFT: mVelX = 0; break;
+            case SDLK_RIGHT: mVelX = 0; break;
         }
     }
+
 
     revolver.handleEvent(e);
 }
 
-void Character::move(Tile *tiles[], SDL_Rect& camera)
+void Character::move(Tile *tiles[], SDL_FRect& camera)
 {
     //move the character left or right
     mBox.x += mVelX;
@@ -123,7 +131,7 @@ void Character::move(Tile *tiles[], SDL_Rect& camera)
     revolver.set_x_val(mBox.x - camera.x - 1);
     revolver.set_y_val(mBox.y - camera.y );
 }
-void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet)
+void Character::render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet)
 {
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
@@ -142,7 +150,7 @@ void Character::render(SDL_Renderer* gRenderer, SDL_Rect& camera, Ltexture Char[
     revolver.handleBullet(gRenderer, gBullet);
 }
 
-void Character::setCamera(SDL_Rect& camera)
+void Character::setCamera(SDL_FRect& camera)
 {
     //Center the camera over the dot
     camera.x = ( mBox.x + CHARACTER_WIDTH / 2) - SCREEN_WIDTH / 2;
@@ -167,7 +175,7 @@ void Character::setCamera(SDL_Rect& camera)
     }
 }
 
-bool touchesWall(SDL_Rect box, Tile* tiles[])
+bool touchesWall(SDL_FRect box, Tile* tiles[])
 {
     //duyet qua cac tiles
     for(int i = 0; i < TOTAL_TILES; i++)

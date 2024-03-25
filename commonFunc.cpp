@@ -26,7 +26,7 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer)
 }
 
 
-bool checkCollision( SDL_Rect a, SDL_Rect b )
+bool checkCollision( SDL_FRect a, SDL_FRect b )
 {
     //The sides of the rectangles
     int leftA, leftB;
@@ -71,7 +71,7 @@ bool checkCollision( SDL_Rect a, SDL_Rect b )
     return true;
 }
 
-double timY(const int& x1, const int& y1, const int& x2, const int& y2, const int& x)
+double timY(const double& x1, const double& y1, const int& x2, const int& y2, const int& x)
 {
     double y;
     double a=(y1-y2)/(x1-x2)*1.0;

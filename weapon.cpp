@@ -36,10 +36,9 @@ void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet)
         bulletObject* p_bullet = p_bullet_list_.at(i);
         if(p_bullet != NULL)
         {
-            const int mouseX = mouse.x;
-            const int mouseY = mouse.y;
-            p_bullet->set_mouseX_val(mouseX);
-            p_bullet->set_mouseY_val(mouseY);
+
+//                p_bullet->set_mouseX_val(mouse.x);
+//                p_bullet->set_mouseY_val(mouse.y);
             if(p_bullet->get_is_move() == 1)
             {
                 p_bullet->Move(mBox.x+CHARACTER_WIDTH/2, mBox.y+CHARACTER_HEIGHT/2);

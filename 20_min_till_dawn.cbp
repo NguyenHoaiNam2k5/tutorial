@@ -47,6 +47,8 @@
 		<Unit filename="commonFunc.cpp" />
 		<Unit filename="commonFunc.h" />
 		<Unit filename="const.h" />
+		<Unit filename="imgTimer.cpp" />
+		<Unit filename="imgTimer.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="texture.cpp" />
 		<Unit filename="texture.h" />

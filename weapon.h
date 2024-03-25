@@ -24,7 +24,7 @@ public:
     void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet);
 private:
     std::vector <bulletObject*> p_bullet_list_;
-    SDL_Rect mBox;
+    SDL_FRect mBox;
     SDL_Point mouse;
     double angle;
 };

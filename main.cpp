@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
 
 			Character Char1;
 
-            SDL_Rect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+            SDL_FRect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 			//current animation frame
 			int frame = 0;
@@ -197,18 +197,18 @@ int main(int argc, char* argv[])
                 //update screen
 				SDL_RenderPresent(gRenderer);
 
-				int real_imp_time = fps_timer.get_ticks();
-				//std::cout << SDL_GetTicks() << std::endl;
-				int time_one_frame= 1000/FRAME_PER_SECOND;
-
-				if(real_imp_time < time_one_frame)
-                {
-                    int delay_time = time_one_frame - real_imp_time;
-                    if(delay_time >= 0)
-                    {
-                        SDL_Delay(delay_time);
-                    }
-                }
+//				int real_imp_time = fps_timer.get_ticks();
+//				//std::cout << SDL_GetTicks() << std::endl;
+//				int time_one_frame= 1000/FRAME_PER_SECOND;
+//
+//				if(real_imp_time < time_one_frame)
+//                {
+//                    int delay_time = time_one_frame - real_imp_time;
+//                    if(delay_time >= 0)
+//                    {
+//                        SDL_Delay(delay_time);
+//                    }
+//                }
 
 				//Go to next frame
 				++frame;
