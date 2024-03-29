@@ -37,29 +37,31 @@ void bulletObject::Move( const double& posX, const double& posY)
         else
             Box.x-=BULLET_VEL;
     }
+    else if(abs(posX - mouseX) > abs(posY - mouseY))
+    {
+        if(mouseX > posX){
+            Box.x += BULLET_VEL;
+        }
+        else{
+            Box.x -= BULLET_VEL;
+        }
+        Box.y = timY(posX, posY, mouseX, mouseY, Box.x);
+    }
     else
     {
-//        if(mouseX > posX){
-//            Box.x += BULLET_VEL;
-//        }
-//        else{
-//            Box.x -= BULLET_VEL;
-//        }
-//        Box.y = timY(posX, posY, mouseX, mouseY, Box.x);
-        double dx = mouseX - Box.x;
-        double dy = mouseY - Box.y;
-        double angle;
-
-    //tinh goc va chuyen sang do
-        angle = atan(dy / dx);
-        Box.x += BULLET_VEL*sin(angle);
-        Box.y += BULLET_VEL*cos(angle);
+        if(mouseY > posY){
+            Box.y += BULLET_VEL;
+        }
+        else{
+            Box.y -= BULLET_VEL;
+        }
+        Box.x = timX(posX, posY, mouseX, mouseY, Box.y);
     }
     if(Box.x > SCREEN_WIDTH || Box.y > SCREEN_HEIGHT) is_move_ = 0;
 
 }
 
-void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet)
+void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
 {
-    gBullet.render(Box.x, Box.y, gRenderer);
+    gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
 }

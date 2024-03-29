@@ -3,6 +3,7 @@
 #include "commonFunc.h"
 #include "character.h"
 #include "imgTimer.h"
+#include "enemies.h"
 
 
 //hien thi cua so
@@ -17,6 +18,8 @@ Ltexture Char[NUM_CHAR];
 Ltexture gWeapon;
 //bullet
 Ltexture gBullet;
+//enemy
+Ltexture gEnemy;
 
 //tile map
 Ltexture gTileTexture;
@@ -80,6 +83,12 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc bullet";
         success = 0;
     }
+    if(!gEnemy.loadFromFile("image/dot.png", gRenderer))
+    {
+        std::cout << "ko tai duoc enemy";
+        success = 0;
+    }
+
     return success;
 }
 
@@ -155,6 +164,9 @@ int main(int argc, char* argv[])
 
             SDL_FRect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
+           std::vector<threatsObject*> enemies;
+
+
 			//current animation frame
 			int frame = 0;
 
@@ -180,6 +192,15 @@ int main(int argc, char* argv[])
 					else
                     {
                         Char1.handleEvent(e, gRenderer, gWeapon);
+
+                        threatsObject* p_enemy = new threatsObject();
+                        p_enemy->set_x_pos(0);
+                        p_enemy->set_y_pos(SCREEN_HEIGHT/2);
+                        p_enemy->set_is_move(1);
+
+                        enemies.push_back(p_enemy);
+
+
                     }
                 }
                 //move character
@@ -193,6 +214,38 @@ int main(int argc, char* argv[])
                 }
 
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
+
+//                threatsObject* p_enemy = new threatsObject();
+//                p_enemy->set_x_pos(0);
+//                p_enemy->set_y_pos(SCREEN_HEIGHT/2);
+//                p_enemy->set_is_move(1);
+//
+//                enemies.push_back(p_enemy);
+                std::cout << enemies.size() << std::endl;
+                for(int i = 0; i <int(enemies.size()); i++)
+                {
+                    threatsObject* p_enemy = enemies.at(i);
+                    if(p_enemy != NULL)
+                    {
+
+//                      p_bullet->set_mouseX_val(mouse.x);
+//                      p_bullet->set_mouseY_val(mouse.y);
+                        if(p_enemy->get_is_move() == 1)
+                        {
+                            p_enemy->move(Char1.get_x_pos(), Char1.get_y_pos());
+                            p_enemy->render(gRenderer, gEnemy);
+                        }
+                        else
+                        {
+                            enemies.erase(enemies.begin()+i);
+                            if(p_enemy != NULL)
+                            {
+                                delete p_enemy;
+                                p_enemy = NULL;
+                            }
+                        }
+                    }
+                }
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
@@ -225,6 +278,7 @@ int main(int argc, char* argv[])
         close(gWindow, gRenderer);
         gTileTexture.free();
         gWeapon.free();
+        gBullet.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

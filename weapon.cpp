@@ -29,9 +29,9 @@ void weapon::handleEvent(SDL_Event& e)
     }
 }
 
-void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet)
+void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
 {
-    for(int i = 0; i < int(p_bullet_list_.size()); i++)
+    for(int i = 0; i <int(p_bullet_list_.size()); i++)
     {
         bulletObject* p_bullet = p_bullet_list_.at(i);
         if(p_bullet != NULL)
@@ -42,7 +42,7 @@ void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet)
             if(p_bullet->get_is_move() == 1)
             {
                 p_bullet->Move(mBox.x+CHARACTER_WIDTH/2, mBox.y+CHARACTER_HEIGHT/2);
-                p_bullet->render(gRenderer, gBullet);
+                p_bullet->render(gRenderer, gBullet, camera);
             }
             else
             {

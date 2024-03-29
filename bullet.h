@@ -28,7 +28,7 @@ public:
 //    void set_mouseX_val(const int& x){mouseX = x;}
 //    void set_mouseY_val(const int& y){mouseY = y;}
 
-    void render(SDL_Renderer* gRenderer, Ltexture& gBullet);
+    void render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 
     void Move( const double& posX, const double& posY);
 private:

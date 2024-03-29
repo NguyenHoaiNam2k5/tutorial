@@ -35,7 +35,7 @@ public:
 
 
     //toc do toi da
-    static const int CHARACTER_VEL = 1;
+    const double CHARACTER_VEL = 1;
 
     //ham khoi tao
     Character();
@@ -52,7 +52,8 @@ public:
     //Shows the character on the screen
     void render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet);
 
-//    void setWeapon();
+    double get_x_pos()const {return mBox.x;}
+    double get_y_pos()const {return mBox.y;}
 
 private:
     //weapon

@@ -67,38 +67,52 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
         //Adjust the velocity
         switch(e.key.keysym.sym)
         {
-            case SDLK_UP:
+            case SDLK_UP: case SDLK_w:
                 mVelY -= CHARACTER_VEL;
                 break;
-            case SDLK_DOWN:
+            case SDLK_DOWN: case SDLK_s:
                 mVelY += CHARACTER_VEL;
                 break;
-            case SDLK_LEFT:
+            case SDLK_LEFT: case SDLK_a:
                 mVelX -= CHARACTER_VEL;
                 break;
-            case SDLK_RIGHT:
+            case SDLK_RIGHT: case SDLK_d:
                 mVelX += CHARACTER_VEL;
                 break;
         }
-        //di chuyen cheo
-        if(mVelX != 0 && mVelY != 0)
-        {
-            mVelX /= sqrt(2);
-            mVelY /= sqrt(2);
-        }
+//        //di chuyen cheo
+//        if(mVelX != 0 && mVelY != 0)
+//        {
+//            mVelX /= sqrt(2);
+//            mVelY /= sqrt(2);
+//        }
 
     }
     //if key was released
      if(e.type == SDL_KEYUP && e.key.repeat == 0)
     {
 
+//        if(mVelX != 0 && mVelY != 0)
+//        {
+//            mVelX *= sqrt(2);
+//            mVelY *= sqrt(2);
+//        }
+
         //dieu chinh toc do
         switch(e.key.keysym.sym)
         {
-            case SDLK_UP: mVelY = 0; break;
-            case SDLK_DOWN: mVelY = 0; break;
-            case SDLK_LEFT: mVelX = 0; break;
-            case SDLK_RIGHT: mVelX = 0; break;
+            case SDLK_UP: case SDLK_w:
+                mVelY += CHARACTER_VEL;
+                break;
+            case SDLK_DOWN: case SDLK_s:
+                mVelY -= CHARACTER_VEL;
+                break;
+            case SDLK_LEFT: case SDLK_a:
+                mVelX += CHARACTER_VEL;
+                break;
+            case SDLK_RIGHT: case SDLK_d:
+                mVelX -= CHARACTER_VEL;
+                break;
         }
     }
 
@@ -128,17 +142,25 @@ void Character::move(Tile *tiles[], SDL_FRect& camera)
         //move back
         mBox.y -= mVelY;
     }
-    revolver.set_x_val(mBox.x - camera.x - 1);
+    revolver.set_x_val(mBox.x - camera.x );
     revolver.set_y_val(mBox.y - camera.y );
 }
 void Character::render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet)
 {
     const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
-    if( currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_RIGHT ])
+    if( currentKeyStates[ SDL_SCANCODE_RIGHT ] || currentKeyStates[ SDL_SCANCODE_D ])
     {
         Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
     }
-    else if( currentKeyStates[ SDL_SCANCODE_DOWN ] || currentKeyStates[ SDL_SCANCODE_LEFT ] )
+    else if( currentKeyStates[ SDL_SCANCODE_LEFT ] || currentKeyStates[ SDL_SCANCODE_A ])
+    {
+        Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
+    }
+    else if(currentKeyStates[ SDL_SCANCODE_UP ] || currentKeyStates[ SDL_SCANCODE_W ])
+    {
+        Char[0].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
+    }
+    else if(currentKeyStates[ SDL_SCANCODE_DOWN ] || currentKeyStates[ SDL_SCANCODE_S ])
     {
         Char[1].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
     }
@@ -147,7 +169,7 @@ void Character::render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char
         Char[2].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
     }
     revolver.render(gRenderer, gWeapon);
-    revolver.handleBullet(gRenderer, gBullet);
+    revolver.handleBullet(gRenderer, gBullet, camera);
 }
 
 void Character::setCamera(SDL_FRect& camera)

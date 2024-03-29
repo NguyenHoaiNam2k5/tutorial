@@ -71,13 +71,22 @@ bool checkCollision( SDL_FRect a, SDL_FRect b )
     return true;
 }
 
-double timY(const double& x1, const double& y1, const int& x2, const int& y2, const int& x)
+double timY(const double& x1, const double& y1, const int& x2, const int& y2, const double& x)
 {
     double y;
     double a=(y1-y2)/(x1-x2)*1.0;
     double b = y1 - a*x1;
     y = a*x+b;
     return y;
+}
+
+double timX(const double& x1, const double& y1, const int& x2, const int& y2, const double& y)
+{
+    double x;
+    double a=(y1-y2)/(x1-x2)*1.0;
+    double b = y1 - a*x1;
+    x = (y-b)/a;
+    return x;
 }
 
 
