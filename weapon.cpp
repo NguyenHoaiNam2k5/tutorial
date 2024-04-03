@@ -15,6 +15,7 @@ weapon::weapon()
 
 void weapon::handleEvent(SDL_Event& e)
 {
+
     SDL_GetMouseState(&mouse.x, &mouse.y);
     if(e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
     {
@@ -29,6 +30,21 @@ void weapon::handleEvent(SDL_Event& e)
     }
 }
 
+void weapon :: removeBullet(const int& idx)
+{
+    int size = p_bullet_list_.size();
+    if(size > 0 && idx < size)
+    {
+        bulletObject* p_bullet = p_bullet_list_.at(idx);
+        p_bullet_list_.erase(p_bullet_list_.begin() + idx);
+        if(p_bullet)
+        {
+            delete p_bullet;
+            p_bullet = NULL;
+        }
+    }
+}
+
 void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
 {
     for(int i = 0; i <int(p_bullet_list_.size()); i++)
@@ -36,12 +52,14 @@ void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect 
         bulletObject* p_bullet = p_bullet_list_.at(i);
         if(p_bullet != NULL)
         {
-
-//                p_bullet->set_mouseX_val(mouse.x);
-//                p_bullet->set_mouseY_val(mouse.y);
             if(p_bullet->get_is_move() == 1)
             {
-                p_bullet->Move(mBox.x+CHARACTER_WIDTH/2, mBox.y+CHARACTER_HEIGHT/2);
+                if(p_bullet->get_posX() == 0 && p_bullet->get_posY() == 0)
+                {
+                    p_bullet->set_posX(mBox.x+CHARACTER_WIDTH/2);
+                    p_bullet->set_posY(mBox.y+CHARACTER_HEIGHT/2);
+                }
+                p_bullet->Move();
                 p_bullet->render(gRenderer, gBullet, camera);
             }
             else

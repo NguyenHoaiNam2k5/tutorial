@@ -193,12 +193,15 @@ int main(int argc, char* argv[])
                     {
                         Char1.handleEvent(e, gRenderer, gWeapon);
 
-                        threatsObject* p_enemy = new threatsObject();
-                        p_enemy->set_x_pos(0);
-                        p_enemy->set_y_pos(SCREEN_HEIGHT/2);
-                        p_enemy->set_is_move(1);
-
-                        enemies.push_back(p_enemy);
+//                        SDL_Delay(10000);
+//                        if(SDL_GetTicks() % 1000 == 0){
+//                        threatsObject* p_enemy = new threatsObject();
+//                        p_enemy->set_x_pos(0);
+//                        p_enemy->set_y_pos(SCREEN_HEIGHT/2);
+//                        p_enemy->set_is_move(1);
+//
+//                        enemies.push_back(p_enemy);
+//                        }
 
 
                     }
@@ -215,12 +218,14 @@ int main(int argc, char* argv[])
 
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
 
-//                threatsObject* p_enemy = new threatsObject();
-//                p_enemy->set_x_pos(0);
-//                p_enemy->set_y_pos(SCREEN_HEIGHT/2);
-//                p_enemy->set_is_move(1);
-//
-//                enemies.push_back(p_enemy);
+                if(SDL_GetTicks() % 300 == 0){
+                    threatsObject* p_enemy = new threatsObject();
+                    p_enemy->set_x_pos(0);
+                    p_enemy->set_y_pos(SCREEN_HEIGHT/2);
+                    p_enemy->set_is_move(1);
+
+                    enemies.push_back(p_enemy);
+                }
                 std::cout << enemies.size() << std::endl;
                 for(int i = 0; i <int(enemies.size()); i++)
                 {
@@ -233,7 +238,7 @@ int main(int argc, char* argv[])
                         if(p_enemy->get_is_move() == 1)
                         {
                             p_enemy->move(Char1.get_x_pos(), Char1.get_y_pos());
-                            p_enemy->render(gRenderer, gEnemy);
+                            p_enemy->render(gRenderer, gEnemy, camera);
                         }
                         else
                         {

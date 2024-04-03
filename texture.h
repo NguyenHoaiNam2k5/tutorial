@@ -45,6 +45,3 @@ class Ltexture
 //Ltexture character;
 
 #endif // TEXTURE_H
-
-void close(SDL_Window* gWindow, SDL_Renderer* gRenderer);
-

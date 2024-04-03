@@ -20,6 +20,8 @@ public:
         p_bullet_list_ = bullet_list;
     }
 
+    void removeBullet(const int& idx);
+
     std::vector<bulletObject*> get_bullet_list()const{return p_bullet_list_;}
     void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 private:

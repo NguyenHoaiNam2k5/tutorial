@@ -25,18 +25,28 @@ public:
     void set_x_val(const int& x){Box.x = x;}
     void set_y_val(const int& y){Box.y = y;}
 
+    void set_posX(const int& x){posX = x;}
+    void set_posY(const int& y){posY = y;}
+
+    int get_posX() const {return posX;}
+    int get_posY() const {return posY;}
+
+
+
 //    void set_mouseX_val(const int& x){mouseX = x;}
 //    void set_mouseY_val(const int& y){mouseY = y;}
 
     void render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 
-    void Move( const double& posX, const double& posY);
+    void Move( );
 private:
 //    int x_val_;
 //    int y_val_;
     bool is_move_;
 
     SDL_FRect Box;
+
+    int posX, posY;
 
     int mouseX, mouseY;
 };

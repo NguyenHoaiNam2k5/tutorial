@@ -1,3 +1,5 @@
+#pragma once
+
 #include "const.h"
 #include "texture.h"
 
@@ -7,12 +9,10 @@ public:
     const int ENEMY_WIDTH = 32;
     const int ENEMY_HEIGHT = 32;
 
-    const float ENEMY_VEL = 0.5;
+    const float ENEMY_VEL = 0.1;
 
     threatsObject();
     ~threatsObject();
-//    void set_x_val(const float& xVal){x_val_ = xVal;}
-//    void set_x_val(const float& yVal){y_val_ = yVal;}
 
     void set_x_pos(const float& xp){mBox.x = xp;}
     void set_y_pos(const float& yp){mBox.y = yp;}
@@ -20,14 +20,8 @@ public:
     float get_y_pos()const {return mBox.y;}
     void set_is_move(const bool& isMove){is_move_ = isMove;}
     bool get_is_move() const{return is_move_;}
-    void SetMapXY(const int&mp_x, const int&mp_y) {map_x_ = mp_x;map_y_ = mp_y;}
-    void render(SDL_Renderer* gRenderer, Ltexture& gEnemy);
-//    void DoPlayer();
-//    void CheckToMap();
+    void render(SDL_Renderer* gRenderer, Ltexture& gEnemy, SDL_FRect camera);
     void move(const double& posX, const double& posY);
-
-    int get_height_frame()const {return mBox.h;}
-    int get_width_frame()const {return mBox.w;}
 
     SDL_FRect getBox()const{return mBox;}
 

@@ -13,6 +13,8 @@ bulletObject::bulletObject()
 //    x_val_ = 0;
 //    y_val_ = 0;
     SDL_GetMouseState(&mouseX, &mouseY);
+    posX = 0;
+    posY = 0;
 }
 
 bulletObject::~bulletObject()
@@ -21,7 +23,7 @@ bulletObject::~bulletObject()
 }
 
 
-void bulletObject::Move( const double& posX, const double& posY)
+void bulletObject::Move()
 {
     if(posX == mouseX)
     {
@@ -63,5 +65,6 @@ void bulletObject::Move( const double& posX, const double& posY)
 
 void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
 {
-    gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
+//    gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
+    gBullet.render(Box.x, Box.y, gRenderer);
 }

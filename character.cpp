@@ -183,7 +183,7 @@ void Character::setCamera(SDL_FRect& camera)
     {
         camera.x = 0;
     }
-    if( camera.y < 0 )
+    if( camera.y < 0)
     {
         camera.y = 0;
     }

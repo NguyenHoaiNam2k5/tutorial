@@ -19,9 +19,9 @@ threatsObject::~threatsObject()
 
 }
 
-void threatsObject::render(SDL_Renderer* gRenderer, Ltexture& gEnemy)
+void threatsObject::render(SDL_Renderer* gRenderer, Ltexture& gEnemy, SDL_FRect camera)
 {
-    gEnemy.render(mBox.x, mBox.y, gRenderer);
+    gEnemy.render(mBox.x - camera.x, mBox.y - camera.y, gRenderer);
 }
 
 void threatsObject::move(const double& posX, const double& posY)
