@@ -252,6 +252,41 @@ int main(int argc, char* argv[])
                     }
                 }
 
+                std::vector<bulletObject*> bullet_arr = Char1.get_bullet_list();
+                for(int r = 0; r < int(bullet_arr.size()); r++)
+                {
+                    bulletObject* p_bullet = bullet_arr.at(r);
+                    if(p_bullet != NULL)
+                    {
+                        for(int t = 0; t < int(enemies.size()); t++)
+                        {
+                            threatsObject* obj_threat = enemies.at(t);
+                            if(obj_threat != NULL)
+                            {
+                                SDL_FRect tRect;
+                                tRect = obj_threat->getBox();
+
+                                SDL_FRect bRect = p_bullet->get_box();
+
+                                bool bCol = checkCollision(tRect, bRect);
+                                if(bCol)
+                                {
+                                    Char1.RemoveBullet(r);
+//                                    obj_threat->Free(gEnemy);
+//                                    obj_threat->set_is_move(0);
+                                    enemies.erase(enemies.begin()+t);
+                                    if(obj_threat != NULL)
+                                    {
+                                        delete obj_threat;
+                                        obj_threat = NULL;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
                 //update screen
 				SDL_RenderPresent(gRenderer);
 
@@ -284,6 +319,7 @@ int main(int argc, char* argv[])
         gTileTexture.free();
         gWeapon.free();
         gBullet.free();
+        gEnemy.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

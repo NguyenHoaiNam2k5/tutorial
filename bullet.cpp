@@ -25,14 +25,14 @@ bulletObject::~bulletObject()
 
 void bulletObject::Move()
 {
-    if(posX == mouseX)
+    if(posX == float(mouseX))
     {
         if(mouseY > posY)
             Box.y+=BULLET_VEL;
         else
             Box.y-=BULLET_VEL;
     }
-    if(posY == mouseY)
+    if(posY == float(mouseY))
     {
         if(mouseX > posX)
             Box.x+=BULLET_VEL;
@@ -60,7 +60,7 @@ void bulletObject::Move()
         Box.x = timX(posX, posY, mouseX, mouseY, Box.y);
     }
     if(Box.x > SCREEN_WIDTH || Box.y > SCREEN_HEIGHT) is_move_ = 0;
-
+//    Box.x -= BULLET_VEL;
 }
 
 void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)

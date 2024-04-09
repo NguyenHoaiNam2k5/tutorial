@@ -12,10 +12,12 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer);
 
 bool checkCollision( SDL_FRect a, SDL_FRect b );
 
+//bool checkCollision(const SDL_FRect& object1, const SDL_FRect& object2);
+
 //tim y khi biet x va duong thang di qua diem do
-double timY(const double& x1, const double& y1, const int& x2, const int& y2, const double& x);
+float timY(const float& x1, const float& y1, const int& x2, const int& y2, const float& x);
 
 //tim x khi biet y va duong thang di qua diem do
-double timX(const double& x1, const double& y1, const int& x2, const int& y2, const double& y);
+float timX(const float& x1, const float& y1, const int& x2, const int& y2, const float& y);
 
 #endif // COMMON_FUNC_H

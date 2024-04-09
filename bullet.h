@@ -5,8 +5,8 @@
 class bulletObject
 {
 public:
-    const int BULLET_WIDTH = 5;
-    const int BULLET_HEIGHT = 5;
+    const float BULLET_WIDTH = 20;
+    const float BULLET_HEIGHT = 20;
 
     const int BULLET_VEL = 2;
 
@@ -15,8 +15,8 @@ public:
 
 //    void set_x_val(const int& xVal){x_val_ = xVal;}
 //    void set_y_val(const int& yVal){y_val_ = yVal;}
-    int get_x_val() const {return Box.x;}
-    int get_y_val() const {return Box.y;}
+    float get_x_val() const {return Box.x;}
+    float get_y_val() const {return Box.y;}
 
     void set_is_move(const bool& isMove){is_move_ = isMove;}
     bool get_is_move()const {return is_move_;}
@@ -28,8 +28,10 @@ public:
     void set_posX(const int& x){posX = x;}
     void set_posY(const int& y){posY = y;}
 
-    int get_posX() const {return posX;}
-    int get_posY() const {return posY;}
+    float get_posX() const {return posX;}
+    float get_posY() const {return posY;}
+
+    SDL_FRect get_box(){return Box;}
 
 
 
@@ -46,7 +48,7 @@ private:
 
     SDL_FRect Box;
 
-    int posX, posY;
+    float posX, posY;
 
     int mouseX, mouseY;
 };

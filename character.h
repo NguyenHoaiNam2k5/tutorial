@@ -35,7 +35,7 @@ public:
 
 
     //toc do toi da
-    const double CHARACTER_VEL = 1;
+    const float CHARACTER_VEL = 1;
 
     //ham khoi tao
     Character();
@@ -52,8 +52,12 @@ public:
     //Shows the character on the screen
     void render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char[], SDL_Rect* currentClip, Ltexture& gWeapon, Ltexture& gBullet);
 
-    double get_x_pos()const {return mBox.x;}
-    double get_y_pos()const {return mBox.y;}
+    float get_x_pos()const {return mBox.x;}
+    float get_y_pos()const {return mBox.y;}
+
+    void RemoveBullet(int idx){revolver.removeBullet(idx);}
+
+    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
 
 private:
     //weapon
@@ -63,7 +67,7 @@ private:
     SDL_FRect mBox;
 
     //toc do nhan vat
-    double mVelX, mVelY;
+    float mVelX, mVelY;
 
 //    //Character's collision box
 //    SDL_Rect mCollider;

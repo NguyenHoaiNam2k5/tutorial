@@ -56,8 +56,8 @@ void weapon::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect 
             {
                 if(p_bullet->get_posX() == 0 && p_bullet->get_posY() == 0)
                 {
-                    p_bullet->set_posX(mBox.x+CHARACTER_WIDTH/2);
-                    p_bullet->set_posY(mBox.y+CHARACTER_HEIGHT/2);
+                    p_bullet->set_posX(mBox.x);
+                    p_bullet->set_posY(mBox.y);
                 }
                 p_bullet->Move();
                 p_bullet->render(gRenderer, gBullet, camera);
