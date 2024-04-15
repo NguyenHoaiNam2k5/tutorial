@@ -5,8 +5,8 @@
 class bulletObject
 {
 public:
-    const float BULLET_WIDTH = 20;
-    const float BULLET_HEIGHT = 20;
+    const float BULLET_WIDTH = 16;
+    const float BULLET_HEIGHT = 16;
 
     const int BULLET_VEL = 2;
 
@@ -33,20 +33,22 @@ public:
 
     SDL_FRect get_box(){return Box;}
 
+    void setCamera(SDL_FRect cameraRect){camera = cameraRect;}
 
-
-//    void set_mouseX_val(const int& x){mouseX = x;}
-//    void set_mouseY_val(const int& y){mouseY = y;}
+    void set_mouseX_val(){mouseX+=camera.x;}
+    void set_mouseY_val(){mouseY+=camera.y;}
 
     void render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 
-    void Move( );
+    void Move(SDL_FRect camera);
 private:
 //    int x_val_;
 //    int y_val_;
     bool is_move_;
 
     SDL_FRect Box;
+
+     SDL_FRect camera;
 
     float posX, posY;
 

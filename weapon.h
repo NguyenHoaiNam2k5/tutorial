@@ -15,17 +15,17 @@ public:
     void set_x_val(const int& x){mBox.x = x;}
     void set_y_val(const int& y){mBox.y = y;}
 
-    void set_bullet_list(std::vector<bulletObject*> bullet_list)
-    {
-        p_bullet_list_ = bullet_list;
-    }
-
-    void removeBullet(const int& idx);
-
-    std::vector<bulletObject*> get_bullet_list()const{return p_bullet_list_;}
-    void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
+//    void set_bullet_list(std::vector<bulletObject*> bullet_list)
+//    {
+//        p_bullet_list_ = bullet_list;
+//    }
+//
+//    void removeBullet(const int& idx);
+//
+//    std::vector<bulletObject*> get_bullet_list()const{return p_bullet_list_;}
+//    void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 private:
-    std::vector <bulletObject*> p_bullet_list_;
+//    std::vector <bulletObject*> p_bullet_list_;
     SDL_FRect mBox;
     SDL_Point mouse;
     double angle;

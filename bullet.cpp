@@ -13,6 +13,14 @@ bulletObject::bulletObject()
 //    x_val_ = 0;
 //    y_val_ = 0;
     SDL_GetMouseState(&mouseX, &mouseY);
+//    mouseX+=camera.x;
+//    mouseY+=camera.y;
+//    camera.x = 0;
+//    camera.y = 0;
+//    camera.h = 0;
+//    camera.w = 0;
+//    mouseX-=camera.x;
+//    mouseY-=camera.y;
     posX = 0;
     posY = 0;
 }
@@ -23,8 +31,10 @@ bulletObject::~bulletObject()
 }
 
 
-void bulletObject::Move()
+void bulletObject::Move(SDL_FRect camera)
 {
+
+    std::cout << mouseX << " " << mouseY << std::endl;
     if(posX == float(mouseX))
     {
         if(mouseY > posY)
@@ -59,12 +69,14 @@ void bulletObject::Move()
         }
         Box.x = timX(posX, posY, mouseX, mouseY, Box.y);
     }
-    if(Box.x > SCREEN_WIDTH || Box.y > SCREEN_HEIGHT) is_move_ = 0;
+    if(Box.x > LEVEL_WIDTH || Box.y > LEVEL_HEIGHT || Box.x < 0 || Box.y < 0) is_move_ = 0;
+//    Box.x -= BULLET_VEL;
+//    Box.y -= BULLET_VEL;
 //    Box.x -= BULLET_VEL;
 }
 
 void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
 {
-//    gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
-    gBullet.render(Box.x, Box.y, gRenderer);
+    gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
+//    gBullet.render(Box.x, Box.y, gRenderer);
 }

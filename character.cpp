@@ -59,7 +59,7 @@ Character::Character()
 
 }
 
-void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon)
+void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera)
 {
     //if a key was pressed
     if(e.type == SDL_KEYDOWN && e.key.repeat == 0)
@@ -115,6 +115,22 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
                 break;
         }
     }
+     if(e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
+    {
+        bulletObject* p_bullet = new bulletObject();
+//        p_bullet->render(gRenderer, gBullet);
+
+        p_bullet->set_posX(mBox.x+CHARACTER_WIDTH/2);
+        p_bullet->set_posY(mBox.y+CHARACTER_HEIGHT/2);
+        p_bullet->set_is_move(1);
+        p_bullet->setCamera(camera);
+        p_bullet->setCamera(camera);
+        p_bullet->set_mouseX_val();
+        p_bullet->set_mouseY_val();
+
+
+        p_bullet_list_.push_back(p_bullet);
+    }
 
 
     revolver.handleEvent(e);
@@ -126,17 +142,17 @@ void Character::move(Tile *tiles[], SDL_FRect& camera)
     mBox.x += mVelX;
 //    mCollider.x = mPosX;
 
-    //if the dot went too far
+    //if the character went too far
     if((mBox.x < 0) || (mBox.x + CHARACTER_WIDTH > LEVEL_WIDTH) || touchesWall(mBox, tiles) )
     {
         //move back
         mBox.x -= mVelX;
     }
 
-    //move the dot up or down
+    //move the character up or down
     mBox.y += mVelY;
 
-    //if the dot went too far
+    //if the character went too far
     if((mBox.y < 0) || (mBox.y + CHARACTER_HEIGHT > LEVEL_HEIGHT) || touchesWall(mBox, tiles) )
     {
         //move back
@@ -169,7 +185,8 @@ void Character::render(SDL_Renderer* gRenderer, SDL_FRect& camera, Ltexture Char
         Char[2].render(mBox.x - camera.x, mBox.y - camera.y, gRenderer, currentClip);
     }
     revolver.render(gRenderer, gWeapon);
-    revolver.handleBullet(gRenderer, gBullet, camera);
+//    revolver.handleBullet(gRenderer, gBullet, camera);
+
 }
 
 void Character::setCamera(SDL_FRect& camera)
@@ -194,6 +211,57 @@ void Character::setCamera(SDL_FRect& camera)
     if( camera.y > LEVEL_HEIGHT - camera.h )
     {
         camera.y = LEVEL_HEIGHT - camera.h;
+    }
+
+}
+
+void Character:: removeBullet(const int& idx)
+{
+    int size = p_bullet_list_.size();
+    if(size > 0 && idx < size)
+    {
+        bulletObject* p_bullet = p_bullet_list_.at(idx);
+        p_bullet_list_.erase(p_bullet_list_.begin() + idx);
+        if(p_bullet)
+        {
+            delete p_bullet;
+            p_bullet = NULL;
+        }
+    }
+}
+
+void Character::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
+{
+    for(int i = 0; i <int(p_bullet_list_.size()); i++)
+    {
+        bulletObject* p_bullet = p_bullet_list_.at(i);
+        if(p_bullet != NULL)
+        {
+            if(p_bullet->get_is_move() == 1)
+            {
+//                p_bullet->setCamera(camera);
+//                p_bullet->set_mouseX_val();
+//                p_bullet->set_mouseY_val();
+                if(p_bullet->get_x_val() == 0 && p_bullet->get_y_val() == 0)
+                {
+                    p_bullet->set_x_val(mBox.x+CHARACTER_HEIGHT/2);
+                    p_bullet->set_y_val(mBox.y+CHARACTER_WIDTH/2);
+//                    p_bullet->set_posX(mBox.x+CHARACTER_HEIGHT/2);
+//                    p_bullet->set_posY(mBox.y+CHARACTER_WIDTH/2);
+                }
+                p_bullet->render(gRenderer, gBullet, camera);
+                p_bullet->Move(camera);
+            }
+            else
+            {
+                p_bullet_list_.erase(p_bullet_list_.begin()+i);
+                if(p_bullet != NULL)
+                {
+                    delete p_bullet;
+                    p_bullet = NULL;
+                }
+            }
+        }
     }
 }
 

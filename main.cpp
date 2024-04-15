@@ -20,6 +20,8 @@ Ltexture gWeapon;
 Ltexture gBullet;
 //enemy
 Ltexture gEnemy;
+//start screen
+Ltexture start;
 
 //tile map
 Ltexture gTileTexture;
@@ -88,6 +90,10 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc enemy";
         success = 0;
     }
+    if(!start.loadFromFile("image/start.png", gRenderer))
+    {
+        std::cout << ""
+    }
 
     return success;
 }
@@ -102,7 +108,7 @@ bool init()
     }
     else
     {
-        gWindow = SDL_CreateWindow("texture tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        gWindow = SDL_CreateWindow("20 min till dawn", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if(gWindow == NULL)
         {
             std::cout << "ko the khoi tao cua so" << SDL_GetError() << std::endl;
@@ -191,7 +197,7 @@ int main(int argc, char* argv[])
 					}
 					else
                     {
-                        Char1.handleEvent(e, gRenderer, gWeapon);
+                        Char1.handleEvent(e, gRenderer, gWeapon, camera);
 
 //                        SDL_Delay(10000);
 //                        if(SDL_GetTicks() % 1000 == 0){
@@ -209,6 +215,7 @@ int main(int argc, char* argv[])
                 //move character
                 Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
+//                std::cout << camera.x << " " << camera.y << std::endl;
 
                 //render level
                 for(int i = 0; i < TOTAL_TILES; i++)
@@ -217,6 +224,7 @@ int main(int argc, char* argv[])
                 }
 
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
+                Char1.handleBullet(gRenderer, gBullet, camera);
 
                 if(SDL_GetTicks() % 300 == 0){
                     threatsObject* p_enemy = new threatsObject();
@@ -237,8 +245,9 @@ int main(int argc, char* argv[])
 //                      p_bullet->set_mouseY_val(mouse.y);
                         if(p_enemy->get_is_move() == 1)
                         {
-                            p_enemy->move(Char1.get_x_pos(), Char1.get_y_pos());
                             p_enemy->render(gRenderer, gEnemy, camera);
+                            p_enemy->move(Char1.get_x_pos(), Char1.get_y_pos());
+
                         }
                         else
                         {
@@ -263,15 +272,14 @@ int main(int argc, char* argv[])
                             threatsObject* obj_threat = enemies.at(t);
                             if(obj_threat != NULL)
                             {
-                                SDL_FRect tRect;
-                                tRect = obj_threat->getBox();
-
+                                SDL_FRect tRect= obj_threat->getBox();
                                 SDL_FRect bRect = p_bullet->get_box();
 
                                 bool bCol = checkCollision(tRect, bRect);
+//                                bool bCol = 1;
                                 if(bCol)
                                 {
-                                    Char1.RemoveBullet(r);
+                                    Char1.removeBullet(r);
 //                                    obj_threat->Free(gEnemy);
 //                                    obj_threat->set_is_move(0);
                                     enemies.erase(enemies.begin()+t);
@@ -289,6 +297,9 @@ int main(int argc, char* argv[])
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+//				std::cout << x << " " << y << " " << camera.x << " " << camera.y << std::endl;
 
 //				int real_imp_time = fps_timer.get_ticks();
 //				//std::cout << SDL_GetTicks() << std::endl;
@@ -305,7 +316,7 @@ int main(int argc, char* argv[])
 
 				//Go to next frame
 				++frame;
-				std::cout << frame << " " << SDL_GetTicks() << std::endl;
+//				std::cout << frame << " " << SDL_GetTicks() << std::endl;
 
 				//cycle animation
 				if(frame / 10 >= Walking_frames)
@@ -319,7 +330,6 @@ int main(int argc, char* argv[])
         gTileTexture.free();
         gWeapon.free();
         gBullet.free();
-        gEnemy.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

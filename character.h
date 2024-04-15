@@ -41,7 +41,7 @@ public:
     Character();
 
     //takes key presses and adjusts the character's velocity
-    void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon);
+    void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera);
 
     //move the character and checks collision
     void move(Tile *tiles[], SDL_FRect& camera);
@@ -55,11 +55,19 @@ public:
     float get_x_pos()const {return mBox.x;}
     float get_y_pos()const {return mBox.y;}
 
-    void RemoveBullet(int idx){revolver.removeBullet(idx);}
+//    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
+    void set_bullet_list(std::vector<bulletObject*> bullet_list)
+    {
+        p_bullet_list_ = bullet_list;
+    }
 
-    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
+    void removeBullet(const int& idx);
+
+    std::vector<bulletObject*> get_bullet_list()const{return p_bullet_list_;}
+    void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
 
 private:
+    std::vector <bulletObject*> p_bullet_list_;
     //weapon
     weapon revolver;
 

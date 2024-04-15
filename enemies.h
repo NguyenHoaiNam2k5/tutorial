@@ -6,8 +6,8 @@
 class threatsObject
 {
 public:
-    const float ENEMY_WIDTH = 20;
-    const float ENEMY_HEIGHT = 20;
+    const float ENEMY_WIDTH = 16;
+    const float ENEMY_HEIGHT = 16;
 
     const float ENEMY_VEL = 0.1;
 
@@ -33,7 +33,5 @@ private:
     SDL_FRect mBox;
 //    float x_val_;
 //    float y_val_;
-    int map_x_;
-    int map_y_;
     bool is_move_;
 };
