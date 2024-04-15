@@ -14,7 +14,7 @@
 const int FRAME_PER_SECOND = 24;//fps
 
 const int SCREEN_WIDTH = 840;
-const int SCREEN_HEIGHT = 680;
+const int SCREEN_HEIGHT = 600;
 
 const int NUM_CHAR = 3;
 

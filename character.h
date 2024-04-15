@@ -55,6 +55,11 @@ public:
     float get_x_pos()const {return mBox.x;}
     float get_y_pos()const {return mBox.y;}
 
+    void set_x_pos(float x){mBox.x = x;}
+    void set_y_pos(float y){mBox.y = y;}
+
+    SDL_FRect get_rect() const {return mBox;}
+
 //    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
     void set_bullet_list(std::vector<bulletObject*> bullet_list)
     {

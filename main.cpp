@@ -21,7 +21,9 @@ Ltexture gBullet;
 //enemy
 Ltexture gEnemy;
 //start screen
-Ltexture start;
+Ltexture gStart;
+//red frame
+Ltexture gRed;
 
 //tile map
 Ltexture gTileTexture;
@@ -90,11 +92,16 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc enemy";
         success = 0;
     }
-    if(!start.loadFromFile("image/start.png", gRenderer))
+    if(!gStart.loadFromFile("image/start.png", gRenderer))
     {
-        std::cout << ""
+        std::cout << "ko tai duoc start";
+        success = 0;
     }
-
+    if(!gRed.loadFromFile("image/redFrame.png", gRenderer))
+    {
+        std::cout << "ko tai duoc red frame";
+        success = 0;
+    }
     return success;
 }
 
@@ -161,7 +168,7 @@ int main(int argc, char* argv[])
 		else
 		{
 			//Main loop flag
-			bool quit = false;
+			bool quit = 1;
 
 			//Event handler
 			SDL_Event e;
@@ -170,16 +177,36 @@ int main(int argc, char* argv[])
 
             SDL_FRect camera = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
-           std::vector<threatsObject*> enemies;
-
-
+            std::vector<threatsObject*> enemies;
+            //render main menu
+            gStart.render(0, 0, gRenderer);
+            SDL_RenderPresent(gRenderer);
+            while(1)
+            {
+                if(SDL_PollEvent( &e ) != 0 && e.button.button == SDL_BUTTON_LEFT)
+                {
+                    int x, y;
+                    SDL_GetMouseState(&x, &y);
+                    if(x > 310 && x < 525 && y > 270 && y < 325 )
+                    {
+                        gStart.free();
+                        quit = 0;
+                        break;
+                    }
+                    else if(x > 310 && x < 525 && y > 345 && y < 395 )
+                    {
+                        break;
+                    }
+                }
+            }
 			//current animation frame
-			int frame = 0;
+            int frame = 0;
 
 			//While application is running
 			while( !quit )
 			{
-			    fps_timer.start();
+
+//			    fps_timer.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -198,24 +225,11 @@ int main(int argc, char* argv[])
 					else
                     {
                         Char1.handleEvent(e, gRenderer, gWeapon, camera);
-
-//                        SDL_Delay(10000);
-//                        if(SDL_GetTicks() % 1000 == 0){
-//                        threatsObject* p_enemy = new threatsObject();
-//                        p_enemy->set_x_pos(0);
-//                        p_enemy->set_y_pos(SCREEN_HEIGHT/2);
-//                        p_enemy->set_is_move(1);
-//
-//                        enemies.push_back(p_enemy);
-//                        }
-
-
                     }
                 }
                 //move character
                 Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
-//                std::cout << camera.x << " " << camera.y << std::endl;
 
                 //render level
                 for(int i = 0; i < TOTAL_TILES; i++)
@@ -240,9 +254,6 @@ int main(int argc, char* argv[])
                     threatsObject* p_enemy = enemies.at(i);
                     if(p_enemy != NULL)
                     {
-
-//                      p_bullet->set_mouseX_val(mouse.x);
-//                      p_bullet->set_mouseY_val(mouse.y);
                         if(p_enemy->get_is_move() == 1)
                         {
                             p_enemy->render(gRenderer, gEnemy, camera);
@@ -257,6 +268,22 @@ int main(int argc, char* argv[])
                                 delete p_enemy;
                                 p_enemy = NULL;
                             }
+                        }
+
+                        //kt va chạm giữa nhân vật và kẻ địch
+                        SDL_FRect rect_player = Char1.get_rect();
+                        SDL_FRect rect_enemy = p_enemy->getBox();
+                        bool bCol1 = false;
+                        bCol1 = checkCollision(rect_player, rect_enemy);
+                        if(bCol1)
+                        {
+                            enemies.erase(enemies.begin()+i);
+                            if(p_enemy != NULL)
+                            {
+                                delete p_enemy;
+                                p_enemy = NULL;
+                            }
+                            Char1.set_x_pos(Char1.get_x_pos() + 20);
                         }
                     }
                 }
@@ -276,12 +303,9 @@ int main(int argc, char* argv[])
                                 SDL_FRect bRect = p_bullet->get_box();
 
                                 bool bCol = checkCollision(tRect, bRect);
-//                                bool bCol = 1;
                                 if(bCol)
                                 {
                                     Char1.removeBullet(r);
-//                                    obj_threat->Free(gEnemy);
-//                                    obj_threat->set_is_move(0);
                                     enemies.erase(enemies.begin()+t);
                                     if(obj_threat != NULL)
                                     {
@@ -294,13 +318,9 @@ int main(int argc, char* argv[])
                         }
                     }
                 }
-
+                gRed.render(0, 0, gRenderer);
                 //update screen
 				SDL_RenderPresent(gRenderer);
-				int x, y;
-				SDL_GetMouseState(&x, &y);
-//				std::cout << x << " " << y << " " << camera.x << " " << camera.y << std::endl;
-
 //				int real_imp_time = fps_timer.get_ticks();
 //				//std::cout << SDL_GetTicks() << std::endl;
 //				int time_one_frame= 1000/FRAME_PER_SECOND;
@@ -316,7 +336,6 @@ int main(int argc, char* argv[])
 
 				//Go to next frame
 				++frame;
-//				std::cout << frame << " " << SDL_GetTicks() << std::endl;
 
 				//cycle animation
 				if(frame / 10 >= Walking_frames)
@@ -330,6 +349,7 @@ int main(int argc, char* argv[])
         gTileTexture.free();
         gWeapon.free();
         gBullet.free();
+        gRed.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();
@@ -342,6 +362,7 @@ int main(int argc, char* argv[])
                 tileSet[ i ] = NULL;
             }
         }
+        gStart.free();
 	}
 	return 0;
 }
