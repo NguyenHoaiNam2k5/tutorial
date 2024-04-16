@@ -20,6 +20,8 @@ const int NUM_CHAR = 3;
 
 const int Walking_frames = 3;
 
+const int explosion_frames = 3;
+
 const int LEVEL_WIDTH = 1280;
 const int LEVEL_HEIGHT = 960;
 

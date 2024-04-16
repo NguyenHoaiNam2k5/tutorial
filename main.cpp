@@ -24,14 +24,18 @@ Ltexture gEnemy;
 Ltexture gStart;
 //red frame
 Ltexture gRed;
+//explosion
+Ltexture gExplosion;
 
 //tile map
 Ltexture gTileTexture;
 SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 
 
-
+//walking_frames
 SDL_Rect Src[Walking_frames];
+//explosion frames
+SDL_Rect Exf[explosion_frames];
 
 
 
@@ -60,6 +64,23 @@ bool loadMedia(Tile* tiles[])
         Src[ 2 ].y =   0;
         Src[ 2 ].w =  32;
         Src[ 2 ].h =  32;
+    }
+
+    //load explosion texture
+    if(!gExplosion.loadFromFile("image/explosion.png", gRenderer))
+    {
+        std::cout << "ko tai duoc explosion texture";
+        success = 0;
+    }
+    else
+    {
+        for(int i = 0; i <= 64; i+= 32)
+        {
+            Exf[i].x = i;
+            Exf[i].y = 0;
+            Exf[i].w = 32;
+            Exf[i].h = 32;
+        }
     }
 
     //load tile texture
@@ -202,11 +223,12 @@ int main(int argc, char* argv[])
 			//current animation frame
             int frame = 0;
 
+
 			//While application is running
 			while( !quit )
 			{
 
-//			    fps_timer.start();
+			    fps_timer.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -277,6 +299,8 @@ int main(int argc, char* argv[])
                         bCol1 = checkCollision(rect_player, rect_enemy);
                         if(bCol1)
                         {
+//                            gRed.render(0, 0, gRenderer);
+                            gStart.render(0, 0, gRenderer);
                             enemies.erase(enemies.begin()+i);
                             if(p_enemy != NULL)
                             {
@@ -284,6 +308,8 @@ int main(int argc, char* argv[])
                                 p_enemy = NULL;
                             }
                             Char1.set_x_pos(Char1.get_x_pos() + 20);
+                            SDL_Delay(10);
+                            quit = 1;
                         }
                     }
                 }
@@ -305,6 +331,11 @@ int main(int argc, char* argv[])
                                 bool bCol = checkCollision(tRect, bRect);
                                 if(bCol)
                                 {
+                                    for(int ex = 0; ex/100 < explosion_frames; ex++)
+                                    {
+                                        gExplosion.render(obj_threat->getBox().x-camera.x, obj_threat->getBox().y-camera.y, gRenderer, &Exf[ex/100]);
+
+                                    }
                                     Char1.removeBullet(r);
                                     enemies.erase(enemies.begin()+t);
                                     if(obj_threat != NULL)
@@ -318,22 +349,8 @@ int main(int argc, char* argv[])
                         }
                     }
                 }
-                gRed.render(0, 0, gRenderer);
                 //update screen
 				SDL_RenderPresent(gRenderer);
-//				int real_imp_time = fps_timer.get_ticks();
-//				//std::cout << SDL_GetTicks() << std::endl;
-//				int time_one_frame= 1000/FRAME_PER_SECOND;
-//
-//				if(real_imp_time < time_one_frame)
-//                {
-//                    int delay_time = time_one_frame - real_imp_time;
-//                    if(delay_time >= 0)
-//                    {
-//                        SDL_Delay(delay_time);
-//                    }
-//                }
-
 				//Go to next frame
 				++frame;
 
@@ -341,6 +358,31 @@ int main(int argc, char* argv[])
 				if(frame / 10 >= Walking_frames)
                 {
                     frame = 0;
+                }
+                if(quit == 1)
+                {
+                    gStart.render(0, 0, gRenderer);
+                    SDL_RenderPresent(gRenderer);
+                }
+                while(quit == 1)
+                {
+                    gStart.render(0, 0, gRenderer);
+                    SDL_RenderPresent(gRenderer);
+                    if(SDL_PollEvent( &e ) != 0 )
+                    {
+                        int x, y;
+                        SDL_GetMouseState(&x, &y);
+                        if(x > 310 && x < 525 && y > 270 && y < 325&& e.button.button == SDL_BUTTON_LEFT)
+                        {
+                            gStart.free();
+                            quit = 0;
+                            break;
+                        }
+                        else if((x > 310 && x < 525 && y > 345 && y < 395&& e.button.button == SDL_BUTTON_LEFT)||e.type == SDL_QUIT )
+                        {
+                            break;
+                        }
+                    }
                 }
 			}
         }
@@ -350,6 +392,7 @@ int main(int argc, char* argv[])
         gWeapon.free();
         gBullet.free();
         gRed.free();
+        gExplosion.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();
