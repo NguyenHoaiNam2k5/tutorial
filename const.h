@@ -10,6 +10,8 @@
 #include <cmath>
 #include <vector>
 #include <utility>
+#include <string>
+#include <sstream>
 
 const int FRAME_PER_SECOND = 24;//fps
 
@@ -39,6 +41,14 @@ const int TILE_background = 00;
 const int TILE_wall = 01;
 //const int TILE_tree1 = 02;
 //const int TILE_tree2 = 03;
+
+enum collision
+{
+    right,
+    left,
+    top,
+    bottom
+};
 
 
 const int RWEAPON = 0;

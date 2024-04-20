@@ -60,6 +60,8 @@ public:
 
     SDL_FRect get_rect() const {return mBox;}
 
+    void set_shoot(int startTime);
+
 //    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
     void set_bullet_list(std::vector<bulletObject*> bullet_list)
     {
@@ -75,6 +77,15 @@ private:
     std::vector <bulletObject*> p_bullet_list_;
     //weapon
     weapon revolver;
+
+    //shoot
+    bool shoot;
+    //max bullet
+    int max_bullet;
+    //so dan da ban
+    int shooted_bullet;
+
+    int StartTime;
 
     //collision box of the character
     SDL_FRect mBox;

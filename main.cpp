@@ -26,6 +26,9 @@ Ltexture gStart;
 Ltexture gRed;
 //explosion
 Ltexture gExplosion;
+//text
+Ltexture gTimeTextTexture;
+Ltexture gHealthTextTexture;
 
 //tile map
 Ltexture gTileTexture;
@@ -36,6 +39,8 @@ SDL_Rect gTileClips[ TOTAL_TILE_SPRITES ];
 SDL_Rect Src[Walking_frames];
 //explosion frames
 SDL_Rect Exf[explosion_frames];
+//font
+TTF_Font* gFont;
 
 
 
@@ -108,7 +113,7 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc bullet";
         success = 0;
     }
-    if(!gEnemy.loadFromFile("image/dot.png", gRenderer))
+    if(!gEnemy.loadFromFile("image/enemies.png", gRenderer))
     {
         std::cout << "ko tai duoc enemy";
         success = 0;
@@ -123,6 +128,24 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc red frame";
         success = 0;
     }
+    //Open the font
+    gFont = TTF_OpenFont( "image/text.ttf", 28 );
+    if( gFont == NULL )
+    {
+        std::cout << "Failed to load lazy font! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl ;
+        success = false;
+    }
+//    else
+//    {
+//        //Render text
+//        SDL_Color textColor = { 0, 100, 0 };
+//        //Load prompt texture
+//		if( !gPromptTextTexture.loadFromRenderedText( "Press Enter to Reset Start Time.", textColor, gRenderer, gFont ) )
+//		{
+//			printf( "Unable to render prompt texture!\n" );
+//			success = false;
+//		}
+//    }
     return success;
 }
 
@@ -161,6 +184,12 @@ bool init()
                 {
                     std::cout << "ko the khoi tao SDL_image" << IMG_GetError() << std::endl;
                     success = 0;
+                }
+                //Initialize SDL_ttf
+                if( TTF_Init() == -1 )
+                {
+                    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+                    success = false;
                 }
             }
         }
@@ -222,13 +251,19 @@ int main(int argc, char* argv[])
             }
 			//current animation frame
             int frame = 0;
+            int health = 3;
 
+			//In memory text stream
+			std::stringstream timeText;
+			std::stringstream healthText;
+
+			fps_timer.start();
 
 			//While application is running
 			while( !quit )
 			{
 
-			    fps_timer.start();
+//			    fps_timer.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -252,6 +287,7 @@ int main(int argc, char* argv[])
                 //move character
                 Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
+                Char1.set_shoot(fps_timer.get_ticks());
 
                 //render level
                 for(int i = 0; i < TOTAL_TILES; i++)
@@ -262,7 +298,7 @@ int main(int argc, char* argv[])
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
                 Char1.handleBullet(gRenderer, gBullet, camera);
 
-                if(SDL_GetTicks() % 300 == 0){
+                if(SDL_GetTicks() % 400 == 0){
                     threatsObject* p_enemy = new threatsObject();
                     p_enemy->set_x_pos(0);
                     p_enemy->set_y_pos(SCREEN_HEIGHT/2);
@@ -270,7 +306,7 @@ int main(int argc, char* argv[])
 
                     enemies.push_back(p_enemy);
                 }
-                std::cout << enemies.size() << std::endl;
+//                std::cout << enemies.size() << std::endl;
                 for(int i = 0; i <int(enemies.size()); i++)
                 {
                     threatsObject* p_enemy = enemies.at(i);
@@ -296,20 +332,36 @@ int main(int argc, char* argv[])
                         SDL_FRect rect_player = Char1.get_rect();
                         SDL_FRect rect_enemy = p_enemy->getBox();
                         bool bCol1 = false;
-                        bCol1 = checkCollision(rect_player, rect_enemy);
+                        bCol1 = checkCollision(rect_enemy, rect_player);
                         if(bCol1)
                         {
-//                            gRed.render(0, 0, gRenderer);
-                            gStart.render(0, 0, gRenderer);
-                            enemies.erase(enemies.begin()+i);
-                            if(p_enemy != NULL)
+                            health --;
+                            gRed.render(0, 0, gRenderer);
+//                            gStart.render(0, 0, gRenderer);
+//                            enemies.erase(enemies.begin()+i);
+//                            Char1.set_x_pos(Char1.get_x_pos() + 20);
+                            int bCol2 = checkCollision2(rect_enemy, rect_player);
+                            if(bCol2 == right)
                             {
-                                delete p_enemy;
-                                p_enemy = NULL;
+
+                                Char1.set_x_pos(Char1.get_x_pos() + 20);
                             }
-                            Char1.set_x_pos(Char1.get_x_pos() + 20);
+                            if(bCol2 == left)
+                            {
+                                Char1.set_x_pos(Char1.get_x_pos() - 20);
+                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
+                            }
+                            if(bCol2 == top)
+                            {
+                                Char1.set_y_pos(Char1.get_y_pos() - 20);
+                                if(Char1.get_y_pos() < 0) Char1.set_y_pos(0);
+                            }
+                            if(bCol2 == bottom)Char1.set_y_pos(Char1.get_y_pos() + 20);
                             SDL_Delay(10);
-                            quit = 1;
+                            if(health <= 0)
+                            {
+                                quit = 1;
+                            }
                         }
                     }
                 }
@@ -349,8 +401,43 @@ int main(int argc, char* argv[])
                         }
                     }
                 }
+
+                //Set text to be rendered
+				timeText.str( "" );
+				healthText.str("");
+				timeText << "Time " << (fps_timer.get_ticks())/60000 << ":" << ((fps_timer.get_ticks())/1000)%60;
+				healthText << "Health: " << health;
+				SDL_Color textColor = { 0, 100, 0 };
+
+				//Render text
+				if( !gTimeTextTexture.loadFromRenderedText( timeText.str().c_str(), textColor, gRenderer, gFont ) )
+				{
+					printf( "Unable to render time texture!\n" );
+				}
+				if( !gHealthTextTexture.loadFromRenderedText( healthText.str().c_str(), textColor, gRenderer, gFont ) )
+				{
+					printf( "Unable to render health texture!\n" );
+				}
+
+				//Render textures
+//				gPromptTextTexture.render( ( SCREEN_WIDTH - gPromptTextTexture.getWidth() ) / 2, 0, gRenderer );
+				gTimeTextTexture.render( 0, 0, gRenderer );
+				gHealthTextTexture.render( 0, 29, gRenderer );
+
                 //update screen
 				SDL_RenderPresent(gRenderer);
+//				int real_imp_time = fps_timer.get_ticks();
+//				std::cout << real_imp_time << std::endl;
+//				int time_one_frame= 1000/FRAME_PER_SECOND;
+//
+//				if(real_imp_time < time_one_frame)
+//                {
+//                    int delay_time = time_one_frame - real_imp_time;
+//                    if(delay_time >= 0)
+//                    {
+//                        SDL_Delay(delay_time);
+//                    }
+//                }
 				//Go to next frame
 				++frame;
 
@@ -359,40 +446,42 @@ int main(int argc, char* argv[])
                 {
                     frame = 0;
                 }
-                if(quit == 1)
-                {
-                    gStart.render(0, 0, gRenderer);
-                    SDL_RenderPresent(gRenderer);
-                }
-                while(quit == 1)
-                {
-                    gStart.render(0, 0, gRenderer);
-                    SDL_RenderPresent(gRenderer);
-                    if(SDL_PollEvent( &e ) != 0 )
-                    {
-                        int x, y;
-                        SDL_GetMouseState(&x, &y);
-                        if(x > 310 && x < 525 && y > 270 && y < 325&& e.button.button == SDL_BUTTON_LEFT)
-                        {
-                            gStart.free();
-                            quit = 0;
-                            break;
-                        }
-                        else if((x > 310 && x < 525 && y > 345 && y < 395&& e.button.button == SDL_BUTTON_LEFT)||e.type == SDL_QUIT )
-                        {
-                            break;
-                        }
-                    }
-                }
+//                if(quit == 1)
+//                {
+//                    gStart.render(0, 0, gRenderer);
+//                    SDL_RenderPresent(gRenderer);
+//                }
+//                while(quit == 1)
+//                {
+//                    gStart.render(0, 0, gRenderer);
+//                    SDL_RenderPresent(gRenderer);
+//                    if(SDL_PollEvent( &e ) != 0 )
+//                    {
+//                        int x, y;
+//                        SDL_GetMouseState(&x, &y);
+//                        if(x > 310 && x < 525 && y > 270 && y < 325&& e.button.button == SDL_BUTTON_LEFT)
+//                        {
+//                            gStart.free();
+//                            quit = 0;
+//                            break;
+//                        }
+//                        else if((x > 310 && x < 525 && y > 345 && y < 395&& e.button.button == SDL_BUTTON_LEFT)||e.type == SDL_QUIT )
+//                        {
+//                            break;
+//                        }
+//                    }
+//                }
 			}
         }
         //Free resources and close SDL
-        close(gWindow, gRenderer);
+        close(gWindow, gRenderer, gFont);
         gTileTexture.free();
         gWeapon.free();
         gBullet.free();
         gRed.free();
         gExplosion.free();
+        gTimeTextTexture.free();
+        gHealthTextTexture.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

@@ -55,7 +55,7 @@ void threatsObject::move(const double& posX, const double& posY)
         else{
             mBox.x -= ENEMY_VEL;
         }
-        mBox.y = timY(posX, posY, preX, preY, mBox.x);
+        mBox.y = timY(preX, preY, posX, posY, mBox.x);
     }
     else
     {
@@ -65,6 +65,6 @@ void threatsObject::move(const double& posX, const double& posY)
         else{
             mBox.y -= ENEMY_VEL;
         }
-        mBox.x = timX(posX, posY, preX, preY, mBox.y);
+        mBox.x = timX(preX, preY, posX, posY, mBox.y);
     }
 }

@@ -49,6 +49,16 @@ Character::Character()
     mBox.x = SCREEN_WIDTH / 2;
     mBox.y = SCREEN_HEIGHT / 2 ;
 
+    //shoot
+    shoot = 1;
+
+    shooted_bullet = 0;
+
+    //max bullet
+    max_bullet = 8;
+
+    StartTime = 0;
+
     //set collision box dimension
     mBox.w = CHARACTER_WIDTH;
     mBox.h = CHARACTER_HEIGHT;
@@ -115,7 +125,7 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
                 break;
         }
     }
-     if(e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
+     if(e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN && shoot)
     {
         bulletObject* p_bullet = new bulletObject();
 //        p_bullet->render(gRenderer, gBullet);
@@ -127,6 +137,7 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
         p_bullet->setCamera(camera);
         p_bullet->set_mouseX_val();
         p_bullet->set_mouseY_val();
+        shooted_bullet++;
 
 
         p_bullet_list_.push_back(p_bullet);
@@ -213,6 +224,21 @@ void Character::setCamera(SDL_FRect& camera)
         camera.y = LEVEL_HEIGHT - camera.h;
     }
 
+}
+
+void Character::set_shoot(int startTime)
+{
+    if(shooted_bullet == max_bullet)
+    {
+        shoot = 0;
+        shooted_bullet++;
+        StartTime = startTime;
+    }
+    else if(SDL_GetTicks() - StartTime >= 5000 && shooted_bullet > max_bullet)
+    {
+        shooted_bullet = 0;
+        shoot = 1;
+    }
 }
 
 void Character:: removeBullet(const int& idx)

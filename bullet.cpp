@@ -23,6 +23,7 @@ bulletObject::bulletObject()
 //    mouseY-=camera.y;
     posX = 0;
     posY = 0;
+
 }
 
 bulletObject::~bulletObject()
@@ -34,7 +35,7 @@ bulletObject::~bulletObject()
 void bulletObject::Move(SDL_FRect camera)
 {
 
-    std::cout << mouseX << " " << mouseY << std::endl;
+//    std::cout << mouseX << " " << mouseY << std::endl;
     if(posX == float(mouseX))
     {
         if(mouseY > posY)

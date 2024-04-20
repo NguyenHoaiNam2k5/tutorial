@@ -51,39 +51,39 @@ bool Ltexture::loadFromFile(std::string path, SDL_Renderer* gRenderer)
     return mTexture != NULL;
 }
 
-//bool Ltexture::loadFromRenderedText(std::string textureText, SDL_Color textColor)
-//{
-//    //get rid of preexisting texture
-//    free();
-//
-//    //render text suface
-//    SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
-//    if(textSurface == NULL)
-//    {
-//        std::cout << "ko tai duoc text surface" << TTF_GetError();
-//    }
-//    else
-//    {
-//        //create texture from surface pixels
-//        mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
-//        if(mTexture == NULL)
-//        {
-//            std::cout << "ko the tao texture" << SDL_GetError();
-//        }
-//        else
-//        {
-//            //get image dimension
-//            mWidth = textSurface->w;
-//            mHeight = textSurface->h;
-//        }
-//
-//        //get rid of old surface
-//        SDL_FreeSurface(textSurface);
-//    }
-//
-//    //return success
-//    return mTexture != NULL;
-//}
+bool Ltexture::loadFromRenderedText(std::string textureText, SDL_Color textColor, SDL_Renderer* gRenderer, TTF_Font* gFont)
+{
+    //get rid of preexisting texture
+    free();
+
+    //render text suface
+    SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
+    if(textSurface == NULL)
+    {
+        std::cout << "ko tai duoc text surface" << TTF_GetError();
+    }
+    else
+    {
+        //create texture from surface pixels
+        mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+        if(mTexture == NULL)
+        {
+            std::cout << "ko the tao texture" << SDL_GetError();
+        }
+        else
+        {
+            //get image dimension
+            mWidth = textSurface->w;
+            mHeight = textSurface->h;
+        }
+
+        //get rid of old surface
+        SDL_FreeSurface(textSurface);
+    }
+
+    //return success
+    return mTexture != NULL;
+}
 
 void Ltexture::free()
 {

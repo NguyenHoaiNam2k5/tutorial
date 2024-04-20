@@ -6,10 +6,10 @@
 class threatsObject
 {
 public:
-    const float ENEMY_WIDTH = 16;
-    const float ENEMY_HEIGHT = 16;
+    const float ENEMY_WIDTH = 32;
+    const float ENEMY_HEIGHT = 32;
 
-    const float ENEMY_VEL = 0.1;
+    const float ENEMY_VEL = 0.5;
 
     threatsObject();
     ~threatsObject();

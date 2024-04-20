@@ -4,10 +4,8 @@
 
 
 
-void close(SDL_Window* gWindow, SDL_Renderer* gRenderer)
+void close(SDL_Window* gWindow, SDL_Renderer* gRenderer, TTF_Font* gFont)
 {
-//	//Free loaded image
-//	gTexture.free();
 
 //	//free global font
 //	TTF_CloseFont(gFont);
@@ -23,6 +21,37 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer)
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
+}
+
+
+int checkCollision2(const SDL_FRect& object1, const SDL_FRect& object2)
+{
+    float left_a = object1.x;
+    float right_a = object1.x + object1.w;
+    float top_a = object1.y;
+    float bottom_a = object1.y + object1.h;
+
+    float left_b = object2.x;
+    float right_b = object2.x + object2.w;
+    float top_b = object2.y;
+    float bottom_b = object2.y + object2.h;
+
+    if(left_a <= right_b && left_a >= left_b)
+    {
+        return right;
+    }
+    else if(left_b <= right_a && left_b>= left_a)
+    {
+        return left;
+    }
+    else if(top_a <= bottom_b && top_a >= top_b)
+    {
+        return bottom;
+    }
+    else if(top_b <= bottom_a && top_b >= top_a)
+    {
+        return top;
+    }
 }
 
 

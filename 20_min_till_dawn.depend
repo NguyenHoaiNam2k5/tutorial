@@ -454,15 +454,15 @@
 	"texture.h"
 	"const.h"
 
-1712748151 source:d:\cpp\btl ltnc\commonfunc.cpp
+1713525506 source:d:\cpp\btl ltnc\commonfunc.cpp
 	"texture.h"
 	"const.h"
 	"commonFunc.h"
 
-1712746702 d:\cpp\btl ltnc\texture.h
+1713364290 d:\cpp\btl ltnc\texture.h
 	"const.h"
 
-1713277581 d:\cpp\btl ltnc\const.h
+1713520037 d:\cpp\btl ltnc\const.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -472,16 +472,18 @@
 	<cmath>
 	<vector>
 	<utility>
+	<string>
+	<sstream>
 
-1712748176 d:\cpp\btl ltnc\commonfunc.h
+1713451414 d:\cpp\btl ltnc\commonfunc.h
 	"texture.h"
 	"const.h"
 
-1712746702 source:d:\cpp\btl ltnc\texture.cpp
+1713364360 source:d:\cpp\btl ltnc\texture.cpp
 	"texture.h"
 	"const.h"
 
-1713282326 source:d:\cpp\btl ltnc\main.cpp
+1713546534 source:d:\cpp\btl ltnc\main.cpp
 	"texture.h"
 	"const.h"
 	"commonFunc.h"
@@ -489,13 +491,13 @@
 	"imgTimer.h"
 	"enemies.h"
 
-1713193898 source:d:\cpp\btl ltnc\character.cpp
+1713543029 source:d:\cpp\btl ltnc\character.cpp
 	"const.h"
 	"character.h"
 	"texture.h"
 	"commonFunc.h"
 
-1713198893 d:\cpp\btl ltnc\character.h
+1713540296 d:\cpp\btl ltnc\character.h
 	"const.h"
 	"texture.h"
 	"weapon.h"
@@ -510,13 +512,13 @@
 	"texture.h"
 	"bullet.h"
 
-1713106087 source:d:\cpp\btl ltnc\bullet.cpp
+1713536380 source:d:\cpp\btl ltnc\bullet.cpp
 	"const.h"
 	"texture.h"
 	"bullet.h"
 	"commonFunc.h"
 
-1713106087 d:\cpp\btl ltnc\bullet.h
+1713536393 d:\cpp\btl ltnc\bullet.h
 	"texture.h"
 	"const.h"
 
@@ -526,13 +528,13 @@
 
 1711101509 d:\cpp\btl ltnc\imgtimer.h
 
-1713107726 source:d:\cpp\btl ltnc\enemies.cpp
+1713367583 source:d:\cpp\btl ltnc\enemies.cpp
 	"enemies.h"
 	"const.h"
 	"texture.h"
 	"commonFunc.h"
 
-1713277581 d:\cpp\btl ltnc\enemies.h
+1713532978 d:\cpp\btl ltnc\enemies.h
 	"const.h"
 	"texture.h"
 

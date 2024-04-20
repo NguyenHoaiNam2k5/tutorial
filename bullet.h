@@ -46,6 +46,8 @@ private:
 //    int y_val_;
     bool is_move_;
 
+
+
     SDL_FRect Box;
 
      SDL_FRect camera;
