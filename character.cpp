@@ -55,9 +55,13 @@ Character::Character()
     shooted_bullet = 0;
 
     //max bullet
-    max_bullet = 8;
+    max_bullet = 11;
 
     StartTime = 0;
+
+    is_level_up = 0;
+
+    health = 3;
 
     //set collision box dimension
     mBox.w = CHARACTER_WIDTH;
@@ -144,7 +148,41 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
     }
 
 
+
     revolver.handleEvent(e);
+}
+
+void Character::handleLevelUp(SDL_Event& e, ImpTimer fps_timer)
+{
+//    gLevelUp.render(105,167, gRenderer);
+//    SDL_RenderPresent(gRenderer);
+    while(1)
+    {
+        if(SDL_PollEvent(&e) != 0)
+        {
+            if(e.type == SDL_KEYDOWN)
+            {
+                if(e.key.keysym.sym == SDLK_1)
+            {
+                    fps_timer.set_level_up();
+                    is_level_up = 0;
+                    break;
+                }
+                else if(e.key.keysym.sym == SDLK_2)
+                {
+                    max_bullet+=2;
+                    is_level_up = 0;
+                    break;
+                }
+                else if(e.key.keysym.sym == SDLK_3)
+                {
+                    health++;
+                    is_level_up = 0;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void Character::move(Tile *tiles[], SDL_FRect& camera)
@@ -239,6 +277,12 @@ void Character::set_shoot(int startTime)
         shooted_bullet = 0;
         shoot = 1;
     }
+}
+
+void Character::set_bullet()
+{
+    if(max_bullet - shooted_bullet <= 0) bullet_left = 0;
+    else bullet_left = max_bullet - shooted_bullet;
 }
 
 void Character:: removeBullet(const int& idx)

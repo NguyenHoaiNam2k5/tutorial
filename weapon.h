@@ -14,6 +14,9 @@ public:
     void render(SDL_Renderer* gRenderer, Ltexture& gWeapon);
     void set_x_val(const int& x){mBox.x = x;}
     void set_y_val(const int& y){mBox.y = y;}
+    int get_mouseX(){return mouse.x;}
+    int get_mouseY(){return mouse.y;}
+
 
 //    void set_bullet_list(std::vector<bulletObject*> bullet_list)
 //    {

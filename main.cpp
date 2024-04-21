@@ -29,6 +29,9 @@ Ltexture gExplosion;
 //text
 Ltexture gTimeTextTexture;
 Ltexture gHealthTextTexture;
+Ltexture gBulletTextTexture;
+//level up
+Ltexture gLevelUp;
 
 //tile map
 Ltexture gTileTexture;
@@ -126,6 +129,11 @@ bool loadMedia(Tile* tiles[])
     if(!gRed.loadFromFile("image/redFrame.png", gRenderer))
     {
         std::cout << "ko tai duoc red frame";
+        success = 0;
+    }
+    if(!gLevelUp.loadFromFile("image/levelUp.png", gRenderer))
+    {
+        std::cout << "ko tai duoc level up";
         success = 0;
     }
     //Open the font
@@ -233,7 +241,7 @@ int main(int argc, char* argv[])
             SDL_RenderPresent(gRenderer);
             while(1)
             {
-                if(SDL_PollEvent( &e ) != 0 && e.button.button == SDL_BUTTON_LEFT)
+                if(SDL_PollEvent( &e ) != 0 && e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
                 {
                     int x, y;
                     SDL_GetMouseState(&x, &y);
@@ -251,11 +259,13 @@ int main(int argc, char* argv[])
             }
 			//current animation frame
             int frame = 0;
-            int health = 3;
+            //so ke dich bi tieu diet
+            int defeated_enemy = 0;
 
 			//In memory text stream
 			std::stringstream timeText;
 			std::stringstream healthText;
+			std::stringstream bulletText;
 
 			fps_timer.start();
 
@@ -281,13 +291,49 @@ int main(int argc, char* argv[])
 					}
 					else
                     {
+//                        if(Char1.get_level_up() == 1)
+//                        {
+//                            gLevelUp.render(105, 167, gRenderer);
+//                            SDL_RenderPresent(gRenderer);
+//                        }
+//                        while(Char1.get_level_up() == 1)
+//                        {
+//
+//                            Char1.handleLevelUp(e, fps_timer, gLevelUp);
+//                        }
                         Char1.handleEvent(e, gRenderer, gWeapon, camera);
+//                        gLevelUp.free();
                     }
                 }
                 //move character
                 Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
                 Char1.set_shoot(fps_timer.get_ticks());
+                Char1.set_bullet();
+                if(defeated_enemy == 1)
+                {
+                    Char1.set_level_up(1);
+                    defeated_enemy = 0;
+                }
+//                while(SDL_PollEvent(&e) != 0)
+//                {
+//                if(Char1.get_level_up() == 1)
+//                {
+//                    gLevelUp.render(105, 167, gRenderer);
+//                    SDL_RenderPresent(gRenderer);
+//                }
+//                }
+
+//                while(Char1.get_level_up() == 1)
+//                {
+//
+//                    Char1.handleLevelUp(e, fps_timer, gLevelUp);
+//                }
+//                if(Char1.get_level_up() == 1)
+//                {
+//                    gLevelUp.render(105, 167, gRenderer);
+//                    SDL_RenderPresent(gRenderer);
+//                }
 
                 //render level
                 for(int i = 0; i < TOTAL_TILES; i++)
@@ -298,7 +344,7 @@ int main(int argc, char* argv[])
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
                 Char1.handleBullet(gRenderer, gBullet, camera);
 
-                if(SDL_GetTicks() % 400 == 0){
+                if(SDL_GetTicks() % 100 == 0){
                     threatsObject* p_enemy = new threatsObject();
                     p_enemy->set_x_pos(0);
                     p_enemy->set_y_pos(SCREEN_HEIGHT/2);
@@ -335,30 +381,30 @@ int main(int argc, char* argv[])
                         bCol1 = checkCollision(rect_enemy, rect_player);
                         if(bCol1)
                         {
-                            health --;
+                            Char1.set_health(Char1.get_health()-1);
                             gRed.render(0, 0, gRenderer);
 //                            gStart.render(0, 0, gRenderer);
 //                            enemies.erase(enemies.begin()+i);
-//                            Char1.set_x_pos(Char1.get_x_pos() + 20);
+                            Char1.set_x_pos(Char1.get_x_pos() + 20);
                             int bCol2 = checkCollision2(rect_enemy, rect_player);
-                            if(bCol2 == right)
-                            {
-
-                                Char1.set_x_pos(Char1.get_x_pos() + 20);
-                            }
-                            if(bCol2 == left)
-                            {
-                                Char1.set_x_pos(Char1.get_x_pos() - 20);
-                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
-                            }
-                            if(bCol2 == top)
-                            {
-                                Char1.set_y_pos(Char1.get_y_pos() - 20);
-                                if(Char1.get_y_pos() < 0) Char1.set_y_pos(0);
-                            }
-                            if(bCol2 == bottom)Char1.set_y_pos(Char1.get_y_pos() + 20);
+//                            if(bCol2 == right)
+//                            {
+//
+//                                Char1.set_x_pos(Char1.get_x_pos() + 20);
+//                            }
+//                            if(bCol2 == left)
+//                            {
+//                                Char1.set_x_pos(Char1.get_x_pos() - 20);
+//                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
+//                            }
+//                            if(bCol2 == top)
+//                            {
+//                                Char1.set_y_pos(Char1.get_y_pos() - 20);
+//                                if(Char1.get_y_pos() < 0) Char1.set_y_pos(0);
+//                            }
+//                            if(bCol2 == bottom)Char1.set_y_pos(Char1.get_y_pos() + 20);
                             SDL_Delay(10);
-                            if(health <= 0)
+                            if(Char1.get_health() <= 0)
                             {
                                 quit = 1;
                             }
@@ -383,6 +429,7 @@ int main(int argc, char* argv[])
                                 bool bCol = checkCollision(tRect, bRect);
                                 if(bCol)
                                 {
+                                    defeated_enemy++;
                                     for(int ex = 0; ex/100 < explosion_frames; ex++)
                                     {
                                         gExplosion.render(obj_threat->getBox().x-camera.x, obj_threat->getBox().y-camera.y, gRenderer, &Exf[ex/100]);
@@ -405,8 +452,10 @@ int main(int argc, char* argv[])
                 //Set text to be rendered
 				timeText.str( "" );
 				healthText.str("");
-				timeText << "Time " << (fps_timer.get_ticks())/60000 << ":" << ((fps_timer.get_ticks())/1000)%60;
-				healthText << "Health: " << health;
+				bulletText.str("");
+				timeText << "Time: " << (fps_timer.get_ticks())/60000 << ":" << ((fps_timer.get_ticks())/1000)%60;
+				healthText << "Health: " << Char1.get_health();
+				bulletText << "bullet: " << Char1.get_bullet_left();
 				SDL_Color textColor = { 0, 100, 0 };
 
 				//Render text
@@ -418,11 +467,27 @@ int main(int argc, char* argv[])
 				{
 					printf( "Unable to render health texture!\n" );
 				}
+				if( !gBulletTextTexture.loadFromRenderedText( bulletText.str().c_str(), textColor, gRenderer, gFont ) )
+				{
+					printf( "Unable to render bullet texture!\n" );
+				}
 
 				//Render textures
-//				gPromptTextTexture.render( ( SCREEN_WIDTH - gPromptTextTexture.getWidth() ) / 2, 0, gRenderer );
+
+
 				gTimeTextTexture.render( 0, 0, gRenderer );
 				gHealthTextTexture.render( 0, 29, gRenderer );
+				gBulletTextTexture.render( 0, 58, gRenderer );
+//
+                if(Char1.get_level_up() == 1)
+                {
+
+                    gLevelUp.render(105, 167, gRenderer);
+                    SDL_RenderPresent(gRenderer);
+                    fps_timer.paused();
+                    Char1.handleLevelUp(e, fps_timer);
+                    fps_timer.unpaused();
+                }
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
@@ -446,31 +511,6 @@ int main(int argc, char* argv[])
                 {
                     frame = 0;
                 }
-//                if(quit == 1)
-//                {
-//                    gStart.render(0, 0, gRenderer);
-//                    SDL_RenderPresent(gRenderer);
-//                }
-//                while(quit == 1)
-//                {
-//                    gStart.render(0, 0, gRenderer);
-//                    SDL_RenderPresent(gRenderer);
-//                    if(SDL_PollEvent( &e ) != 0 )
-//                    {
-//                        int x, y;
-//                        SDL_GetMouseState(&x, &y);
-//                        if(x > 310 && x < 525 && y > 270 && y < 325&& e.button.button == SDL_BUTTON_LEFT)
-//                        {
-//                            gStart.free();
-//                            quit = 0;
-//                            break;
-//                        }
-//                        else if((x > 310 && x < 525 && y > 345 && y < 395&& e.button.button == SDL_BUTTON_LEFT)||e.type == SDL_QUIT )
-//                        {
-//                            break;
-//                        }
-//                    }
-//                }
 			}
         }
         //Free resources and close SDL
@@ -482,6 +522,7 @@ int main(int argc, char* argv[])
         gExplosion.free();
         gTimeTextTexture.free();
         gHealthTextTexture.free();
+        gLevelUp.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

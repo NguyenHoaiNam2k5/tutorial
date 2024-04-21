@@ -8,6 +8,7 @@ ImpTimer::ImpTimer()
     paused_tick_ = 0;
     is_paused_ = 0;
     is_started_ = 0;
+    level_up_time = 0;
 }
 
 ImpTimer::~ImpTimer()
@@ -33,7 +34,7 @@ void ImpTimer::paused()
     if(is_started_ == 1 && is_paused_ == 0)
     {
         is_paused_ = 1;
-        paused_tick_ = SDL_GetTicks() - start_tick_;
+        paused_tick_ = SDL_GetTicks() - start_tick_ ;
     }
 }
 
@@ -57,7 +58,7 @@ int ImpTimer::get_ticks()
         }
         else
         {
-            return SDL_GetTicks() - start_tick_;
+            return SDL_GetTicks() - start_tick_+ level_up_time;
         }
     }
     return 0;

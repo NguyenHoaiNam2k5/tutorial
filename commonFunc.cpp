@@ -17,6 +17,7 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer, TTF_Font* gFont)
 	gWindow = NULL;
 	gRenderer = NULL;
 
+
 	//Quit SDL subsystems
 	TTF_Quit();
 	IMG_Quit();

@@ -2,6 +2,7 @@
 #include "const.h"
 #include "texture.h"
 #include "weapon.h"
+#include "imgTimer.h"
 
 
 class Tile
@@ -61,6 +62,13 @@ public:
     SDL_FRect get_rect() const {return mBox;}
 
     void set_shoot(int startTime);
+    void set_bullet();
+    int get_bullet_left(){return bullet_left;}
+    void set_level_up(bool lv){is_level_up = lv;}
+    bool get_level_up(){return is_level_up;}
+    int get_health(){return health;}
+    void set_health(int hp){health = hp;}
+    void handleLevelUp(SDL_Event& e, ImpTimer fps_timer);
 
 //    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
     void set_bullet_list(std::vector<bulletObject*> bullet_list)
@@ -84,6 +92,12 @@ private:
     int max_bullet;
     //so dan da ban
     int shooted_bullet;
+    //so dan con lai
+    int bullet_left;
+    //level up
+    bool is_level_up;
+    //chi so sinh menh
+    int health;
 
     int StartTime;
 

@@ -10,6 +10,7 @@ public:
     void stop();
     void paused();
     void unpaused();
+    void set_level_up(){level_up_time = 30000;}
 
     int get_ticks();
 
@@ -18,6 +19,8 @@ public:
 private:
     int start_tick_;
     int paused_tick_;
+
+    int level_up_time;
 
     bool is_paused_;
     bool is_started_;
