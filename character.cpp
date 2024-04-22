@@ -273,7 +273,7 @@ void Character::set_shoot()
         shooted_bullet++;
         StartTime = SDL_GetTicks();
     }
-    else if(SDL_GetTicks() - StartTime >= 5000 && shooted_bullet > max_bullet)
+    else if(SDL_GetTicks() - StartTime >= 1000 && shooted_bullet > max_bullet)
     {
         shooted_bullet = 0;
         shoot = 1;
