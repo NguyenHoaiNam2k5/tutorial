@@ -82,7 +82,7 @@ bool loadMedia(Tile* tiles[])
     }
     else
     {
-        for(int i = 0; i <= 64; i+= 32)
+        for(int i = 0; i <= 96; i+= 32)
         {
             Exf[i].x = i;
             Exf[i].y = 0;
@@ -210,6 +210,7 @@ bool init()
 int main(int argc, char* argv[])
 {
     ImpTimer fps_timer;
+    ImpTimer fps_timer1;
     //Start up SDL and create window
 	if( !init() )
 	{
@@ -273,7 +274,7 @@ int main(int argc, char* argv[])
 			while( !quit )
 			{
 
-//			    fps_timer.start();
+			    fps_timer1.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -301,6 +302,15 @@ int main(int argc, char* argv[])
 //
 //                            Char1.handleLevelUp(e, fps_timer, gLevelUp);
 //                        }
+//                        if(Char1.get_level_up() == 1)
+//                        {
+//
+//                            gLevelUp.render(105, 167, gRenderer);
+//                            SDL_RenderPresent(gRenderer);
+//                            fps_timer.paused();
+//                            Char1.handleLevelUp(e, fps_timer);
+//                            fps_timer.unpaused();
+//                        }
                         Char1.handleEvent(e, gRenderer, gWeapon, camera);
 //                        gLevelUp.free();
                     }
@@ -308,33 +318,13 @@ int main(int argc, char* argv[])
                 //move character
                 Char1.move(tileSet, camera);
                 Char1.setCamera(camera);
-                Char1.set_shoot(fps_timer.get_ticks());
+                Char1.set_shoot();
                 Char1.set_bullet();
-                if(defeated_enemy == 1)
+                if(defeated_enemy == LEVEL_UP)
                 {
                     Char1.set_level_up(1);
                     defeated_enemy = 0;
                 }
-//                while(SDL_PollEvent(&e) != 0)
-//                {
-//                if(Char1.get_level_up() == 1)
-//                {
-//                    gLevelUp.render(105, 167, gRenderer);
-//                    SDL_RenderPresent(gRenderer);
-//                }
-//                }
-
-//                while(Char1.get_level_up() == 1)
-//                {
-//
-//                    Char1.handleLevelUp(e, fps_timer, gLevelUp);
-//                }
-//                if(Char1.get_level_up() == 1)
-//                {
-//                    gLevelUp.render(105, 167, gRenderer);
-//                    SDL_RenderPresent(gRenderer);
-//                }
-
                 //render level
                 for(int i = 0; i < TOTAL_TILES; i++)
                 {
@@ -344,13 +334,28 @@ int main(int argc, char* argv[])
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
                 Char1.handleBullet(gRenderer, gBullet, camera);
 
-                if(SDL_GetTicks() % 100 == 0){
-                    threatsObject* p_enemy = new threatsObject();
-                    p_enemy->set_x_pos(0);
-                    p_enemy->set_y_pos(SCREEN_HEIGHT/2);
-                    p_enemy->set_is_move(1);
+                if(SDL_GetTicks() % 200 == 0){
+                    threatsObject* p_enemy1 = new threatsObject();
+                    threatsObject* p_enemy2 = new threatsObject();
+                    threatsObject* p_enemy3 = new threatsObject();
+                    threatsObject* p_enemy4 = new threatsObject();
+                    p_enemy1->set_x_pos(0);
+                    p_enemy1->set_y_pos(SCREEN_HEIGHT/2);
+                    p_enemy1->set_is_move(1);
+                    p_enemy2->set_x_pos(SCREEN_WIDTH/2);
+                    p_enemy2->set_y_pos(0);
+                    p_enemy2->set_is_move(1);
+                    p_enemy3->set_x_pos(LEVEL_WIDTH);
+                    p_enemy3->set_y_pos(LEVEL_HEIGHT/2);
+                    p_enemy3->set_is_move(1);
+                    p_enemy4->set_x_pos(SCREEN_WIDTH/2);
+                    p_enemy4->set_y_pos(LEVEL_HEIGHT);
+                    p_enemy4->set_is_move(1);
 
-                    enemies.push_back(p_enemy);
+                    enemies.push_back(p_enemy1);
+                    enemies.push_back(p_enemy2);
+                    enemies.push_back(p_enemy3);
+                    enemies.push_back(p_enemy4);
                 }
 //                std::cout << enemies.size() << std::endl;
                 for(int i = 0; i <int(enemies.size()); i++)
@@ -379,35 +384,17 @@ int main(int argc, char* argv[])
                         SDL_FRect rect_enemy = p_enemy->getBox();
                         bool bCol1 = false;
                         bCol1 = checkCollision(rect_enemy, rect_player);
-                        if(bCol1)
+                        if(bCol1 && (SDL_GetTicks() - Char1.get_undead_time()) > 1000)
                         {
                             Char1.set_health(Char1.get_health()-1);
                             gRed.render(0, 0, gRenderer);
-//                            gStart.render(0, 0, gRenderer);
-//                            enemies.erase(enemies.begin()+i);
                             Char1.set_x_pos(Char1.get_x_pos() + 20);
-                            int bCol2 = checkCollision2(rect_enemy, rect_player);
-//                            if(bCol2 == right)
-//                            {
-//
-//                                Char1.set_x_pos(Char1.get_x_pos() + 20);
-//                            }
-//                            if(bCol2 == left)
-//                            {
-//                                Char1.set_x_pos(Char1.get_x_pos() - 20);
-//                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
-//                            }
-//                            if(bCol2 == top)
-//                            {
-//                                Char1.set_y_pos(Char1.get_y_pos() - 20);
-//                                if(Char1.get_y_pos() < 0) Char1.set_y_pos(0);
-//                            }
-//                            if(bCol2 == bottom)Char1.set_y_pos(Char1.get_y_pos() + 20);
                             SDL_Delay(10);
                             if(Char1.get_health() <= 0)
                             {
                                 quit = 1;
                             }
+                            Char1.set_undead_time(SDL_GetTicks());
                         }
                     }
                 }
@@ -430,10 +417,9 @@ int main(int argc, char* argv[])
                                 if(bCol)
                                 {
                                     defeated_enemy++;
-                                    for(int ex = 0; ex/100 < explosion_frames; ex++)
+                                    for(int ex = 0; ex < explosion_frames; ex++)
                                     {
-                                        gExplosion.render(obj_threat->getBox().x-camera.x, obj_threat->getBox().y-camera.y, gRenderer, &Exf[ex/100]);
-
+                                        gExplosion.render(obj_threat->getBox().x-camera.x, obj_threat->getBox().y-camera.y, gRenderer, &Exf[ex]);
                                     }
                                     Char1.removeBullet(r);
                                     enemies.erase(enemies.begin()+t);
@@ -478,20 +464,23 @@ int main(int argc, char* argv[])
 				gTimeTextTexture.render( 0, 0, gRenderer );
 				gHealthTextTexture.render( 0, 29, gRenderer );
 				gBulletTextTexture.render( 0, 58, gRenderer );
-//
+
+
+
                 if(Char1.get_level_up() == 1)
                 {
-
                     gLevelUp.render(105, 167, gRenderer);
                     SDL_RenderPresent(gRenderer);
                     fps_timer.paused();
                     Char1.handleLevelUp(e, fps_timer);
                     fps_timer.unpaused();
+                    Char1.set_x_vel(0);
+                    Char1.set_y_vel(0);
                 }
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
-//				int real_imp_time = fps_timer.get_ticks();
+//				int real_imp_time = fps_timer1.get_ticks();
 //				std::cout << real_imp_time << std::endl;
 //				int time_one_frame= 1000/FRAME_PER_SECOND;
 //

@@ -58,17 +58,19 @@ public:
 
     void set_x_pos(float x){mBox.x = x;}
     void set_y_pos(float y){mBox.y = y;}
+    void set_x_vel(float x){mVelX = x;}
+    void set_y_vel(float y){mVelY = y;}
 
     SDL_FRect get_rect() const {return mBox;}
 
-    void set_shoot(int startTime);
+    void set_shoot();
     void set_bullet();
     int get_bullet_left(){return bullet_left;}
     void set_level_up(bool lv){is_level_up = lv;}
     bool get_level_up(){return is_level_up;}
     int get_health(){return health;}
     void set_health(int hp){health = hp;}
-    void handleLevelUp(SDL_Event& e, ImpTimer fps_timer);
+    void handleLevelUp(SDL_Event e, ImpTimer& fps_timer);
 
 //    std::vector<bulletObject*> get_bullet_list()const{return revolver.get_bullet_list();}
     void set_bullet_list(std::vector<bulletObject*> bullet_list)
@@ -77,6 +79,9 @@ public:
     }
 
     void removeBullet(const int& idx);
+
+    void set_undead_time(int t){undeadTime = t;}
+    int get_undead_time(){return undeadTime;}
 
     std::vector<bulletObject*> get_bullet_list()const{return p_bullet_list_;}
     void handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
@@ -100,6 +105,8 @@ private:
     int health;
 
     int StartTime;
+
+    int undeadTime;
 
     //collision box of the character
     SDL_FRect mBox;

@@ -37,6 +37,9 @@ const int TILE_HEIGHT = 32;
 const int TOTAL_TILES = 1200;
 const int TOTAL_TILE_SPRITES = 2;
 
+//level up
+const int LEVEL_UP = 50;
+
 const int TILE_background = 00;
 const int TILE_wall = 01;
 //const int TILE_tree1 = 02;

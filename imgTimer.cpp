@@ -58,7 +58,8 @@ int ImpTimer::get_ticks()
         }
         else
         {
-            return SDL_GetTicks() - start_tick_+ level_up_time;
+            int get_ticks = SDL_GetTicks() - start_tick_ + level_up_time;
+            return get_ticks;
         }
     }
     return 0;
