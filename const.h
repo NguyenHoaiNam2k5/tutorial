@@ -40,6 +40,9 @@ const int TOTAL_TILE_SPRITES = 2;
 //level up
 const int LEVEL_UP = 50;
 
+//survive time
+const int survive_time = 1200000;
+
 const int TILE_background = 00;
 const int TILE_wall = 01;
 //const int TILE_tree1 = 02;

@@ -36,10 +36,13 @@ public:
 
 
     //toc do toi da
-    const float CHARACTER_VEL = 1;
+    const float CHARACTER_VEL = 0.5;
 
     //ham khoi tao
     Character();
+
+    //dat nhan vat ve trang thai ban dau
+    void set_character();
 
     //takes key presses and adjusts the character's velocity
     void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera);

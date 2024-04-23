@@ -37,6 +37,7 @@ Ltexture gLevel1;
 //defeat
 Ltexture gDefeat;
 //victory
+Ltexture gWin;
 
 //tile map
 Ltexture gTileTexture;
@@ -151,9 +152,14 @@ bool loadMedia(Tile* tiles[])
         std::cout << "ko tai duoc level up";
         success = 0;
     }
-    if(!gDefeat.loadFromFile("image/defeat.jpg", gRenderer))
+    if(!gDefeat.loadFromFile("image/defeat.png", gRenderer))
     {
         std::cout << "ko tai duoc defeat";
+        success = 0;
+    }
+    if(!gWin.loadFromFile("image/win.png", gRenderer))
+    {
+        std::cout << "ko tai duoc win";
         success = 0;
     }
     //Open the font
@@ -334,7 +340,7 @@ int main(int argc, char* argv[])
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
                 Char1.handleBullet(gRenderer, gBullet, camera);
 
-                if(SDL_GetTicks() % 300 == 0){
+                if(SDL_GetTicks() % 400 == 0){
                     threatsObject* p_enemy1 = new threatsObject();
                     threatsObject* p_enemy2 = new threatsObject();
                     threatsObject* p_enemy3 = new threatsObject();
@@ -506,12 +512,42 @@ int main(int argc, char* argv[])
                 gLevel.render(20, 0, gRenderer);
                 SDL_Rect clip;
                 clip.h = 32;
-                clip.w = (800/50)*defeated_enemy;
+                clip.w = (800/LEVEL_UP)*defeated_enemy;
                 gLevel1.render(20, 0, gRenderer, &clip);
-                if(quit == 1)
+                if(fps_timer.get_ticks() >= survive_time)
                 {
-                    gDefeat.render(0,0, gRenderer);
-                    SDL_RenderPresent(gRenderer);
+                    quit = 1;
+                }
+                while(quit == 1)
+                {
+                    if(fps_timer.get_ticks() < survive_time)
+                    {
+                        gDefeat.render(0,0, gRenderer);
+                        SDL_RenderPresent(gRenderer);
+                    }
+                    else
+                    {
+                        gWin.render(0,0, gRenderer);
+                        SDL_RenderPresent(gRenderer);
+                    }
+                    if(SDL_PollEvent( &e ) != 0 && e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
+                    {
+                        int x, y;
+                        SDL_GetMouseState(&x, &y);
+                        if(x > 330 && x < 510 && y > 410 && y < 490 )
+                        {
+                            quit = 0;
+                            Char1.set_character();
+                            fps_timer.start();
+                            defeated_enemy = 0;
+                            enemies.clear();
+                            break;
+                        }
+                        else if(x > 330 && x < 510 && y > 280 && y < 370)
+                        {
+                            break;
+                        }
+                    }
                 }
 
                 //update screen
@@ -548,6 +584,7 @@ int main(int argc, char* argv[])
         gTimeTextTexture.free();
         gHealthTextTexture.free();
         gLevelUp.free();
+        gDefeat.free();
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

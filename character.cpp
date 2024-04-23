@@ -75,6 +75,44 @@ Character::Character()
 
 }
 
+void Character::set_character()
+{
+    // khoi tao toa do
+    mBox.x = SCREEN_WIDTH / 2;
+    mBox.y = SCREEN_HEIGHT / 2 ;
+
+    //shoot
+    shoot = 1;
+
+    shooted_bullet = 0;
+
+    //max bullet
+    max_bullet = 11;
+
+    StartTime = 0;
+
+    is_level_up = 0;
+
+    health = 3;
+
+    undeadTime = 0;
+
+    //set collision box dimension
+    mBox.w = CHARACTER_WIDTH;
+    mBox.h = CHARACTER_HEIGHT;
+
+    //khoi tao toc do
+    mVelX = 0;
+    mVelY = 0;
+
+    //remove bullet
+    for(int r = 0; r < int(p_bullet_list_.size()); r++)
+    {
+        bulletObject* p_bullet = p_bullet_list_.at(r);
+        p_bullet->set_is_move(0);
+    }
+}
+
 void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera)
 {
     //if a key was pressed
