@@ -38,6 +38,14 @@ Ltexture gLevel1;
 Ltexture gDefeat;
 //victory
 Ltexture gWin;
+//the music that will be played
+Mix_Music* gMusic = NULL;
+
+//the sound effect that will be used
+Mix_Chunk* gShoot = NULL;
+Mix_Chunk* gPlayerCol = NULL;
+Mix_Chunk* gBulletCol = NULL;
+
 
 //tile map
 Ltexture gTileTexture;
@@ -169,65 +177,23 @@ bool loadMedia(Tile* tiles[])
         std::cout << "Failed to load lazy font! SDL_ttf Error: %s\n" << TTF_GetError() << std::endl ;
         success = false;
     }
-//    else
-//    {
-//        //Render text
-//        SDL_Color textColor = { 0, 100, 0 };
-//        //Load prompt texture
-//		if( !gPromptTextTexture.loadFromRenderedText( "Press Enter to Reset Start Time.", textColor, gRenderer, gFont ) )
-//		{
-//			printf( "Unable to render prompt texture!\n" );
-//			success = false;
-//		}
-//    }
-    return success;
-}
 
-bool init()
-{
-    bool success = 1;
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
+    //load music
+    gMusic = Mix_LoadMUS("image/beat.wav");
+    if( gMusic == NULL )
     {
+        std::cout << "failed to load music" << Mix_GetError() << std::endl ;
+        success = false;
+    }
+
+    //load sound effects
+    gShoot = Mix_LoadWAV("image/high.wav");
+    if(gShoot == NULL)
+    {
+        std::cout << "failed to load shoot sound effect" << Mix_GetError() << std::endl;
         success = 0;
-        std::cout << "ko the khoi tao SDL" << SDL_GetError() << std::endl;
     }
-    else
-    {
-        gWindow = SDL_CreateWindow("20 min till dawn", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if(gWindow == NULL)
-        {
-            std::cout << "ko the khoi tao cua so" << SDL_GetError() << std::endl;
-            success = 0;
-        }
-        else
-        {
-            //create renderer
-            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if(gRenderer == NULL)
-            {
-                std::cout << "ko the khoi tao renderer" << SDL_GetError() << std::endl;
-                success = 0;
-            }
-            else
-            {
-                //tao mau cho renderer
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                //khoi tao PNG loading
-                int imgFlags = IMG_INIT_PNG;
-                if(!(IMG_Init(imgFlags) & imgFlags))
-                {
-                    std::cout << "ko the khoi tao SDL_image" << IMG_GetError() << std::endl;
-                    success = 0;
-                }
-                //Initialize SDL_ttf
-                if( TTF_Init() == -1 )
-                {
-                    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
-                    success = false;
-                }
-            }
-        }
-    }
+
     return success;
 }
 
@@ -236,9 +202,8 @@ bool init()
 int main(int argc, char* argv[])
 {
     ImpTimer fps_timer;
-    ImpTimer fps_timer1;
     //Start up SDL and create window
-	if( !init() )
+	if( !init(gRenderer, gWindow) )
 	{
 		printf( "Failed to initialize!\n" );
 	}
@@ -296,11 +261,11 @@ int main(int argc, char* argv[])
 
 			fps_timer.start();
 
+			Mix_PlayMusic(gMusic, -1);
+
 			//While application is running
 			while( !quit )
 			{
-
-			    fps_timer1.start();
 
                 //Clear screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -318,7 +283,7 @@ int main(int argc, char* argv[])
 					}
 					else
                     {
-                        Char1.handleEvent(e, gRenderer, gWeapon, camera);
+                        Char1.handleEvent(e, gRenderer, gWeapon, camera, gShoot);
                     }
                 }
                 //move character
@@ -520,6 +485,7 @@ int main(int argc, char* argv[])
                 }
                 while(quit == 1)
                 {
+                    Mix_HaltMusic();
                     if(fps_timer.get_ticks() < survive_time)
                     {
                         gDefeat.render(0,0, gRenderer);
@@ -541,6 +507,7 @@ int main(int argc, char* argv[])
                             fps_timer.start();
                             defeated_enemy = 0;
                             enemies.clear();
+                            Mix_PlayMusic(gMusic, -1);
                             break;
                         }
                         else if(x > 330 && x < 510 && y > 280 && y < 370)
@@ -552,18 +519,6 @@ int main(int argc, char* argv[])
 
                 //update screen
 				SDL_RenderPresent(gRenderer);
-//				int real_imp_time = fps_timer1.get_ticks();
-//				std::cout << real_imp_time << std::endl;
-//				int time_one_frame= 1000/FRAME_PER_SECOND;
-//
-//				if(real_imp_time < time_one_frame)
-//                {
-//                    int delay_time = time_one_frame - real_imp_time;
-//                    if(delay_time >= 0)
-//                    {
-//                        SDL_Delay(delay_time);
-//                    }
-//                }
 				//Go to next frame
 				++frame;
 
@@ -585,6 +540,15 @@ int main(int argc, char* argv[])
         gHealthTextTexture.free();
         gLevelUp.free();
         gDefeat.free();
+        Mix_FreeChunk(gShoot);
+        Mix_FreeChunk(gPlayerCol);
+        Mix_FreeChunk(gBulletCol);
+        Mix_FreeMusic(gMusic);
+        gMusic = NULL;
+        gShoot = NULL;
+        gPlayerCol = NULL;
+        gBulletCol = NULL;
+
         for(int i = 0; i < NUM_CHAR; i++)
         {
             Char[i].free();

@@ -45,7 +45,7 @@ public:
     void set_character();
 
     //takes key presses and adjusts the character's velocity
-    void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera);
+    void handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera, Mix_Chunk* gShoot);
 
     //move the character and checks collision
     void move(Tile *tiles[], SDL_FRect& camera);

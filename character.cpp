@@ -113,7 +113,7 @@ void Character::set_character()
     }
 }
 
-void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera)
+void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWeapon, SDL_FRect camera, Mix_Chunk* gShoot)
 {
     //if a key was pressed
     if(e.type == SDL_KEYDOWN && e.key.repeat == 0)
@@ -182,6 +182,7 @@ void Character::handleEvent(SDL_Event& e, SDL_Renderer* gRenderer, Ltexture& gWe
         p_bullet->set_mouseX_val();
         p_bullet->set_mouseY_val();
         shooted_bullet++;
+        Mix_PlayChannel(-1, gShoot, 0);
 
 
         p_bullet_list_.push_back(p_bullet);

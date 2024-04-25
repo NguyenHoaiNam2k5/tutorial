@@ -207,4 +207,58 @@ bool checkCollision(const SDL_FRect& object1, const SDL_FRect& object2)
   return false;
 }
 
+bool init(SDL_Renderer*&gRenderer, SDL_Window*&gWindow)
+{
+    bool success = 1;
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
+    {
+        success = 0;
+        std::cout << "ko the khoi tao SDL" << SDL_GetError() << std::endl;
+    }
+    else
+    {
+        gWindow = SDL_CreateWindow("20 min till dawn", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if(gWindow == NULL)
+        {
+            std::cout << "ko the khoi tao cua so" << SDL_GetError() << std::endl;
+            success = 0;
+        }
+        else
+        {
+            //create renderer
+            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if(gRenderer == NULL)
+            {
+                std::cout << "ko the khoi tao renderer" << SDL_GetError() << std::endl;
+                success = 0;
+            }
+            else
+            {
+                //tao mau cho renderer
+                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                //khoi tao PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if(!(IMG_Init(imgFlags) & imgFlags))
+                {
+                    std::cout << "ko the khoi tao SDL_image" << IMG_GetError() << std::endl;
+                    success = 0;
+                }
+                //Initialize SDL_ttf
+                if( TTF_Init() == -1 )
+                {
+                    printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+                    success = false;
+                }
+                 //Initialize SDL_mixer
+                if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+                {
+                    printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+                    success = false;
+                }
+            }
+        }
+    }
+    return success;
+}
+
 

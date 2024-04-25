@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <string>
 #include <fstream>
 #include <cmath>
@@ -13,7 +14,6 @@
 #include <string>
 #include <sstream>
 
-const int FRAME_PER_SECOND = 24;//fps
 
 const int SCREEN_WIDTH = 840;
 const int SCREEN_HEIGHT = 600;
