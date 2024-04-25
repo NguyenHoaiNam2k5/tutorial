@@ -8,7 +8,7 @@ public:
     const float BULLET_WIDTH = 16;
     const float BULLET_HEIGHT = 16;
 
-    const int BULLET_VEL = 2;
+    const int BULLET_VEL = 4;
 
     bulletObject();
     ~bulletObject();

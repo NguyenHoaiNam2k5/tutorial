@@ -10,7 +10,7 @@ public:
     void stop();
     void paused();
     void unpaused();
-    void set_level_up(){level_up_time += 30000;}
+    void set_level_up(){level_up_time += 120000;}
 
     int get_ticks();
 

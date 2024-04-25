@@ -46,8 +46,8 @@ SDL_FRect Tile::getBox()
 Character::Character()
 {
     // khoi tao toa do
-    mBox.x = SCREEN_WIDTH / 2;
-    mBox.y = SCREEN_HEIGHT / 2 ;
+    mBox.x = LEVEL_WIDTH/2;
+    mBox.y = LEVEL_HEIGHT/2 - 10 ;
 
     //shoot
     shoot = 1;
@@ -61,7 +61,7 @@ Character::Character()
 
     is_level_up = 0;
 
-    health = 3;
+    health = 10;
 
     undeadTime = 0;
 
@@ -210,7 +210,7 @@ void Character::handleLevelUp(SDL_Event e, ImpTimer& fps_timer)
                 }
                 else if(e.key.keysym.sym == SDLK_2)
                 {
-                    max_bullet+=2;
+                    max_bullet+=5;
                     is_level_up = 0;
                     break;
                 }
@@ -312,7 +312,7 @@ void Character::set_shoot()
         shooted_bullet++;
         StartTime = SDL_GetTicks();
     }
-    else if(SDL_GetTicks() - StartTime >= 1000 && shooted_bullet > max_bullet)
+    else if(SDL_GetTicks() - StartTime >= 4000 && shooted_bullet > max_bullet)
     {
         shooted_bullet = 0;
         shoot = 1;

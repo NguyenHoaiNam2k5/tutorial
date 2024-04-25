@@ -59,6 +59,9 @@ public:
     float get_x_pos()const {return mBox.x;}
     float get_y_pos()const {return mBox.y;}
 
+    float get_vel_x(){return mVelX;}
+    float get_vel_y(){return mVelY;}
+
     void set_x_pos(float x){mBox.x = x;}
     void set_y_pos(float y){mBox.y = y;}
     void set_x_vel(float x){mVelX = x;}

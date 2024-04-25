@@ -120,9 +120,9 @@ int main(int argc, char* argv[])
                     threatsObject* p_enemy3 = new threatsObject();
                     threatsObject* p_enemy4 = new threatsObject();
                     p_enemy1->set_x_pos(0);
-                    p_enemy1->set_y_pos(SCREEN_HEIGHT/2);
+                    p_enemy1->set_y_pos(LEVEL_HEIGHT/2);
                     p_enemy1->set_is_move(1);
-                    p_enemy2->set_x_pos(SCREEN_WIDTH/2);
+                    p_enemy2->set_x_pos(LEVEL_WIDTH/2);
                     p_enemy2->set_y_pos(0);
                     p_enemy2->set_is_move(1);
                     p_enemy3->set_x_pos(LEVEL_WIDTH);
@@ -169,14 +169,26 @@ int main(int argc, char* argv[])
                             Mix_PlayChannel(-1, gPlayerCol, 0);
                             Char1.set_health(Char1.get_health()-1);
                             gRed.render(0, 0, gRenderer);
-                            Char1.set_x_pos(Char1.get_x_pos() + 20);
+//                            Char1.set_x_pos(Char1.get_x_pos() + 20);
                             SDL_Delay(10);
                             if(Char1.get_health() <= 0)
                             {
                                 quit = 1;
                             }
                             Char1.set_undead_time(SDL_GetTicks());
+                            int bCol2 = checkCollision2(rect_enemy, rect_player);
+                            if(bCol2 == right)
+                            {
+                                Char1.set_x_pos(Char1.get_x_pos() + 30);
+                                if(Char1.get_x_pos() > LEVEL_WIDTH) Char1.set_x_pos(LEVEL_WIDTH - CHARACTER_WIDTH);
+                            }
+                            if(bCol2 == left)
+                            {
+                                Char1.set_x_pos(Char1.get_x_pos() - 30);
+                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
+                            }
                         }
+
                     }
                 }
 

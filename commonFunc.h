@@ -4,6 +4,7 @@
 #include "texture.h"
 #include "const.h"
 #include "enemies.h"
+#include "character.h"
 
 //bool loadMedia(Ltexture gTexture, SDL_Renderer* gRenderer);
 
