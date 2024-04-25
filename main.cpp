@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
             //render main menu
             gStart.render(0, 0, gRenderer);
             SDL_RenderPresent(gRenderer);
+            Mix_PlayMusic(gTitleMusic, -1);
             while(1)
             {
                 if(SDL_PollEvent( &e ) != 0 && e.button.button == SDL_BUTTON_LEFT && e.type == SDL_MOUSEBUTTONDOWN)
@@ -48,6 +49,7 @@ int main(int argc, char* argv[])
                     {
                         gStart.free();
                         quit = 0;
+                        Mix_HaltMusic();
                         break;
                     }
                     else if(x > 310 && x < 525 && y > 345 && y < 395 )
@@ -68,7 +70,7 @@ int main(int argc, char* argv[])
 
 			fps_timer.start();
 
-			Mix_PlayMusic(gMusic, -1);
+            Mix_PlayMusic(gOstMusic, -1);
 
 			//While application is running
 			while( !quit )
@@ -164,6 +166,7 @@ int main(int argc, char* argv[])
                         bCol1 = checkCollision(rect_enemy, rect_player);
                         if(bCol1 && (SDL_GetTicks() - Char1.get_undead_time()) > 1000)
                         {
+                            Mix_PlayChannel(-1, gPlayerCol, 0);
                             Char1.set_health(Char1.get_health()-1);
                             gRed.render(0, 0, gRenderer);
                             Char1.set_x_pos(Char1.get_x_pos() + 20);
@@ -194,6 +197,7 @@ int main(int argc, char* argv[])
                                 bool bCol = checkCollision(tRect, bRect);
                                 if(bCol)
                                 {
+                                    Mix_PlayChannel(-1, gBulletCol, 0);
                                     defeated_enemy++;
                                     for(int ex = 0; ex < explosion_frames; ex++)
                                     {
@@ -312,7 +316,7 @@ int main(int argc, char* argv[])
                             fps_timer.start();
                             defeated_enemy = 0;
                             enemies.clear();
-                            Mix_PlayMusic(gMusic, -1);
+                            Mix_PlayMusic(gOstMusic, -1);
                             break;
                         }
                         else if(x > 330 && x < 510 && y > 280 && y < 370)

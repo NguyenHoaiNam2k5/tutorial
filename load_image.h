@@ -38,7 +38,8 @@ Ltexture gDefeat;
 //victory
 Ltexture gWin;
 //the music that will be played
-Mix_Music* gMusic = NULL;
+Mix_Music* gTitleMusic = NULL;
+Mix_Music* gOstMusic = NULL;
 
 //the sound effect that will be used
 Mix_Chunk* gShoot = NULL;
@@ -176,18 +177,36 @@ bool loadMedia(Tile* tiles[])
     }
 
     //load music
-    gMusic = Mix_LoadMUS("image/beat.wav");
-    if( gMusic == NULL )
+    gTitleMusic = Mix_LoadMUS("image/titleMusic.mp3");
+    if( gTitleMusic == NULL )
+    {
+        std::cout << "failed to load music" << Mix_GetError() << std::endl ;
+        success = false;
+    }
+    gOstMusic = Mix_LoadMUS("image/ostMusic.mp3");
+    if( gOstMusic == NULL )
     {
         std::cout << "failed to load music" << Mix_GetError() << std::endl ;
         success = false;
     }
 
     //load sound effects
-    gShoot = Mix_LoadWAV("image/high.wav");
+    gShoot = Mix_LoadWAV("image/shoot.mp3");
     if(gShoot == NULL)
     {
         std::cout << "failed to load shoot sound effect" << Mix_GetError() << std::endl;
+        success = 0;
+    }
+    gBulletCol = Mix_LoadWAV("image/hit_enemy.mp3");
+    if(gBulletCol == NULL)
+    {
+        std::cout << "failed to load bullet collision sound effect" << Mix_GetError() << std::endl;
+        success = 0;
+    }
+    gPlayerCol = Mix_LoadWAV("image/player_col.mp3");
+    if(gPlayerCol == NULL)
+    {
+        std::cout << "failed to load player collision sound effect" << Mix_GetError() << std::endl;
         success = 0;
     }
 
@@ -208,8 +227,10 @@ void Free()
     Mix_FreeChunk(gShoot);
     Mix_FreeChunk(gPlayerCol);
     Mix_FreeChunk(gBulletCol);
-    Mix_FreeMusic(gMusic);
-    gMusic = NULL;
+    Mix_FreeMusic(gOstMusic);
+    Mix_FreeMusic(gTitleMusic);
+    gTitleMusic = NULL;
+    gOstMusic = NULL;
     gShoot = NULL;
     gPlayerCol = NULL;
     gBulletCol = NULL;
