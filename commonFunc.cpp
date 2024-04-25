@@ -22,6 +22,7 @@ void close(SDL_Window* gWindow, SDL_Renderer* gRenderer, TTF_Font* gFont)
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
+	Mix_Quit();
 }
 
 
@@ -259,6 +260,31 @@ bool init(SDL_Renderer*&gRenderer, SDL_Window*&gWindow)
         }
     }
     return success;
+}
+
+void create_enemies(std::vector<threatsObject*> &enemies)
+{
+    threatsObject* p_enemy1 = new threatsObject();
+    threatsObject* p_enemy2 = new threatsObject();
+    threatsObject* p_enemy3 = new threatsObject();
+    threatsObject* p_enemy4 = new threatsObject();
+    p_enemy1->set_x_pos(0);
+    p_enemy1->set_y_pos(SCREEN_HEIGHT/2);
+    p_enemy1->set_is_move(1);
+    p_enemy2->set_x_pos(SCREEN_WIDTH/2);
+    p_enemy2->set_y_pos(0);
+    p_enemy2->set_is_move(1);
+    p_enemy3->set_x_pos(LEVEL_WIDTH);
+    p_enemy3->set_y_pos(LEVEL_HEIGHT/2);
+    p_enemy3->set_is_move(1);
+    p_enemy4->set_x_pos(SCREEN_WIDTH/2);
+    p_enemy4->set_y_pos(LEVEL_HEIGHT);
+    p_enemy4->set_is_move(1);
+
+    enemies.push_back(p_enemy1);
+    enemies.push_back(p_enemy2);
+    enemies.push_back(p_enemy3);
+    enemies.push_back(p_enemy4);
 }
 
 

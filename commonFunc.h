@@ -3,6 +3,7 @@
 
 #include "texture.h"
 #include "const.h"
+#include "enemies.h"
 
 //bool loadMedia(Ltexture gTexture, SDL_Renderer* gRenderer);
 
@@ -22,5 +23,7 @@ float timY(const float& x1, const float& y1, const int& x2, const int& y2, const
 float timX(const float& x1, const float& y1, const int& x2, const int& y2, const float& y);
 
 bool init(SDL_Renderer*&gRenderer, SDL_Window*&gWindow);
+
+void create_enemies(std::vector<threatsObject*> &enemies);
 
 #endif // COMMON_FUNC_H

@@ -53,6 +53,7 @@
 		<Unit filename="enemies.h" />
 		<Unit filename="imgTimer.cpp" />
 		<Unit filename="imgTimer.h" />
+		<Unit filename="load_image.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="texture.cpp" />
 		<Unit filename="texture.h" />

@@ -27,6 +27,7 @@ public:
 
     void Free(Ltexture& gEnemy);
 
+
 private:
 //    int height_frame_;
 //    int width_frame_;
