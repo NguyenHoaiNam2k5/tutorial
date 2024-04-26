@@ -6,7 +6,7 @@ Thử nghiệm game: https://drive.google.com/drive/u/0/folders/19B7RXduK3KnQKBe
 
 20 minutes till dawn là một tựa game sinh tồn. Bạn sẽ phải sinh tồn giữa một mê cung đầy quái vật trong thời gian 20 phút. Vượt qua được 20 phút đó, bình minh sẽ lên và bạn đã sinh tồn thành công.
 
-- [0. Cách tải game](https://github.com/NguyenHoaiNam2k5/tutorial/edit/master/README.md#0-c%C3%A1ch-t%E1%BA%A3i-game)
+- [0. Cách tải game]([https://github.com/NguyenHoaiNam2k5/tutorial/edit/master/README.md#0-c%C3%A1ch-t%E1%BA%A3i-game](https://github.com/NguyenHoaiNam2k5/tutorial/blob/master/README.md#0-c%C3%A1ch-t%E1%BA%A3i-game))
 - [1. Bắt đầu game](https://github.com/NguyenHoaiNam2k5/tutorial/edit/master/README.md#1-b%E1%BA%AFt-%C4%91%E1%BA%A7u-game)
 - [2. Các thành phần trong game](https://github.com/NguyenHoaiNam2k5/tutorial/edit/master/README.md#2-c%C3%A1c-th%C3%A0nh-ph%E1%BA%A7n-trong-game)
 - [3. Cách chơi](https://github.com/NguyenHoaiNam2k5/tutorial/edit/master/README.md#3-c%C3%A1ch-ch%C6%A1i)
