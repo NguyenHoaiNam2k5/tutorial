@@ -61,7 +61,7 @@ Character::Character()
 
     is_level_up = 0;
 
-    health = 10;
+    health = 5;
 
     undeadTime = 0;
 
@@ -78,8 +78,8 @@ Character::Character()
 void Character::set_character()
 {
     // khoi tao toa do
-    mBox.x = SCREEN_WIDTH / 2;
-    mBox.y = SCREEN_HEIGHT / 2 ;
+    mBox.x = LEVEL_WIDTH/2;
+    mBox.y = LEVEL_HEIGHT/2 - 10 ;
 
     //shoot
     shoot = 1;
@@ -349,15 +349,11 @@ void Character::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRe
         {
             if(p_bullet->get_is_move() == 1)
             {
-//                p_bullet->setCamera(camera);
-//                p_bullet->set_mouseX_val();
-//                p_bullet->set_mouseY_val();
                 if(p_bullet->get_x_val() == 0 && p_bullet->get_y_val() == 0)
                 {
                     p_bullet->set_x_val(mBox.x+CHARACTER_HEIGHT/2);
                     p_bullet->set_y_val(mBox.y+CHARACTER_WIDTH/2);
-//                    p_bullet->set_posX(mBox.x+CHARACTER_HEIGHT/2);
-//                    p_bullet->set_posY(mBox.y+CHARACTER_WIDTH/2);
+
                 }
                 p_bullet->render(gRenderer, gBullet, camera);
                 p_bullet->Move(camera);
@@ -393,20 +389,7 @@ bool touchesWall(SDL_FRect box, Tile* tiles[])
     return 0;
 }
 
-//bool touchesTree(SDL_Rect box, Tile* tiles[])
-//{
-//    for(int i = 0; i < TOTAL_TILES; i++)
-//    {
-//        if(tiles[i]->getType() == TILE_tree1)
-//        {
-//            if(checkCollision(box, tiles[i]->getBox()))
-//            {
-//                return true;
-//            }
-//        }
-//    }
-//    return false;
-//}
+
 
 
 bool setTiles( Tile* tiles[], SDL_Rect gTileClips[] )
@@ -486,16 +469,6 @@ bool setTiles( Tile* tiles[], SDL_Rect gTileClips[] )
 			gTileClips[ TILE_wall ].y = 32;
 			gTileClips[ TILE_wall ].w = TILE_WIDTH;
 			gTileClips[ TILE_wall ].h = TILE_HEIGHT;
-//
-//			gTileClips[ TILE_tree1 ].x = 32;
-//			gTileClips[ TILE_tree1 ].y = 32;
-//			gTileClips[ TILE_tree1 ].w = TILE_WIDTH;
-//			gTileClips[ TILE_tree1 ].h = TILE_HEIGHT;
-//
-//			gTileClips[ TILE_tree2 ].x = 32;
-//			gTileClips[ TILE_tree2 ].y = 0;
-//			gTileClips[ TILE_tree2 ].w = TILE_WIDTH;
-//			gTileClips[ TILE_tree2 ].h = TILE_HEIGHT;
 
 		}
 	}

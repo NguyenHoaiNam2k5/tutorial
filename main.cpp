@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
                 Char1.setCamera(camera);
                 Char1.set_shoot();
                 Char1.set_bullet();
-                if(defeated_enemy == LEVEL_UP)
+                if(defeated_enemy >= LEVEL_UP)
                 {
                     Char1.set_level_up(1);
                     defeated_enemy = 0;
@@ -180,12 +180,18 @@ int main(int argc, char* argv[])
                             if(bCol2 == right)
                             {
                                 Char1.set_x_pos(Char1.get_x_pos() + 30);
-                                if(Char1.get_x_pos() > LEVEL_WIDTH) Char1.set_x_pos(LEVEL_WIDTH - CHARACTER_WIDTH);
+                                if(touchesWall(Char1.get_rect(), tileSet))
+                                {
+                                    Char1.set_x_pos(Char1.get_x_pos() - 30);
+                                }
                             }
                             if(bCol2 == left)
                             {
                                 Char1.set_x_pos(Char1.get_x_pos() - 30);
-                                if(Char1.get_x_pos() < 0) Char1.set_x_pos(0);
+                                if(touchesWall(Char1.get_rect(), tileSet))
+                                {
+                                    Char1.set_x_pos(Char1.get_x_pos() + 30);
+                                }
                             }
                         }
 
