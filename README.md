@@ -1,19 +1,31 @@
-**20 MINUTES TILL DAWN**
+# 20 MINUTES TILL DAWN
 
 Thử nghiệm game: https://drive.google.com/drive/u/0/folders/19B7RXduK3KnQKBe6l_1yT526CLVZTuPl
 
-**GIỚI THIỆU GAME**
+# GIỚI THIỆU GAME
 
 20 minutes till dawn là một tựa game sinh tồn. Bạn sẽ phải sinh tồn giữa một mê cung đầy quái vật trong thời gian 20 phút. Vượt qua được 20 phút đó, bình minh sẽ lên và bạn đã sinh tồn thành công.
 
-**1. Bắt đầu game**
+## 0. Cách tải game
+
+a. Cách 1:
+
+Tải game (được nén thành .zip) tại link: https://github.com/NguyenHoaiNam2k5/tutorial/releases
+
+Giải nén vào 1 thư mục. Sau đó vào bin, chọn debug và bật 20_min_till_dawn để chơi.
+
+b. Cách 2:
+
+Clone repo này về và chạy 20_min_till_dawn để chơi game.
+
+## 1. Bắt đầu game
 
 Sau khi vào game, màn hình bắt đầu sẽ hiện ra.
 ![](image/START.png)
 
 Click "play" nếu bạn muốn bắt đầu chơi hoặc "quit" nếu bạn muốn thoát.
 
-**2. Các thành phần trong game**
+## 2. Các thành phần trong game
 
 Giao diện khi vào game
 ![Screenshot 2024-04-26 095227](https://github.com/NguyenHoaiNam2k5/tutorial/assets/161907790/7f837ece-7145-4d11-9301-b315ffca6740)
@@ -33,7 +45,7 @@ Chỉ số sinh mệnh và đạn:
 Đồng hồ (chạy đến 20:00 thì bạn sẽ thắng):
 ![Screenshot 2024-04-26 095705](https://github.com/NguyenHoaiNam2k5/tutorial/assets/161907790/be0c796c-d92e-4665-9ca4-4511e077615c)
 
-**3. Cách chơi**
+## 3. Cách chơi
 
 Sử dụng các nút mũi tên hoặc các nút "w,a,s,d" để di chuyển. Sử dụng chuột để bắn, bấm chuột trái để bắn, đạn sẽ bắn theo hướng của chuột. Khởi đầu, bạn có 11 viên đạn và 5 mạng. Sau khi sử dụng hết đạn sẽ mất 3 giây để nạp lại đạn. 
 
@@ -52,7 +64,7 @@ Nút 3 (tăng chỉ số sinh mệnh lên 1)
 
 ![Screenshot 2024-04-26 102345](https://github.com/NguyenHoaiNam2k5/tutorial/assets/161907790/2042d457-2012-465a-a447-43549ca81f50)
 
-**4. Chiến thắng và thất bại**
+## 4. Chiến thắng và thất bại
 
 Bạn sẽ chiến thắng nếu sinh tồn được đến khi đồng hồ chỉ 20:00 
 ![](image/win.png)
@@ -62,7 +74,7 @@ Bạn sẽ thua nếu bạn chết trước khi đồng hồ chỉ 20:00
 
 Click "play" nếu bạn muốn chơi tiếp hoặc "quit" nếu bạn muốn thoát.
 
-**VỀ ĐỒ HỌA GAME**
+# VỀ ĐỒ HỌA GAME
 
 Sử dụng ứng dụng LibreSprite để làm sprite sheet (Link download: https://libresprite.github.io/#!/downloads). Có tham khảo tại các nguồn: https://flanne.itch.io/10-minutes-till-dawn; https://minutes-till-dawn.fandom.com/wiki/Minutes_Till_Dawn_Wiki.
 
@@ -73,7 +85,7 @@ Các file chunk lấy từ nguồn: https://pixabay.com/sound-effects/.
 
 Các file ảnh khác lấy từ google hình ảnh.
 
-**VỀ SOURCE CODE GAME**
+# VỀ SOURCE CODE GAME
 
 - file commonFunc: chứa các hàm cơ bản được dùng xuyên suốt chương trình.
   - init: khởi tạo window và renderer (tham khảo trên lazyFoo)
