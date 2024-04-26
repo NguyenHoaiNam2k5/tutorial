@@ -80,18 +80,30 @@ Các file ảnh khác lấy từ google hình ảnh.
 - file texture: quản lý các texture, khởi tạo, tải lên và giải phóng.
 - file imgTimer: xử lý thời gian, dùng để tính thời gian cho đồng hồ.
 - file enemies: quản lý quái vật: khởi tạo, di chuyển, hiển thị, giải phóng.
-- file bullet: quản lí đạn: bắn theo hướng của chuột.
-- file weapon: quản lí vũ khí: quay theo hướng của chuột.
-- file character: quản lí nhân vật
-  - xử lí bắn đạn
-  - quản lí số lượng đạn và mạng
-  - xử lí lên level
+- file bullet: quản lý đạn: bắn theo hướng của chuột.
+- file weapon: quản lý vũ khí: quay theo hướng của chuột.
+- file character: quản lý nhân vật
+  - xử lý bắn đạn
+  - quản lý số lượng đạn và mạng
+  - xử lý lên level
 - file load_image:
   - khai báo các texture
   - load các texture từ các file có sẵn (hàm loadMedia)
   - giải phóng bộ nhớ (hàm Free)
 - file main:
-  -
+  - dòng 42 đến 60: render title screen
+  - dòng 76 đến 357: game loop
+    - dòng 86 đến 97: xử lý sự kiện bàn phím và chuột.
+    - dòng 99 đến 115: set các chỉ số cho nhân vật, xử lý bắn đạn và render bản đồ.
+    - dòng 117 đến 139: tạo ra quái vật
+    - dòng 141 đến 199: giải phóng bộ nhớ sau khi quái vật bị tiêu diệt và xử lý sự kiện va chạm giữa player với quái vật.
+    - dòng 201 đến 236: xử lý sự kiện va chạm giữa đạn của player và quái vật
+    - dòng 238 đến 289: render các chỉ số health, bullet và đồng hồ
+    - dòng 293 đến 302: xử lý sự kiện level up
+    - dòng 304 đến 308: render thanh kinh nghiệm
+    - dòng 309 đến 345: xử lý sự kiện thắng thua
+    - dòng 347 đến 356: update screen và chuyển đến frame tiếp theo của character
+    - dòng 359 đến 374: giải phóng bộ nhớ
 
 
 
