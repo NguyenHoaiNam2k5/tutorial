@@ -8,6 +8,7 @@
 
 Sau khi vào game, màn hình bắt đầu sẽ hiện ra.
 ![](image/START.png)
+
 Click "play" nếu bạn muốn bắt đầu chơi hoặc "quit" nếu bạn muốn thoát.
 
 **2. Các thành phần trong game**
@@ -56,6 +57,8 @@ Bạn sẽ chiến thắng nếu sinh tồn được đến khi đồng hồ ch�
 
 Bạn sẽ thua nếu bạn chết trước khi đồng hồ chỉ 20:00 
 ![](image/defeat.png)
+
+Click "play" nếu bạn muốn chơi tiếp hoặc "quit" nếu bạn muốn thoát.
 
 **VỀ ĐỒ HỌA GAME**
 
