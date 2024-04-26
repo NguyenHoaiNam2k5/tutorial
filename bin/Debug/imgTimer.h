@@ -11,7 +11,6 @@ public:
     void paused();
     void unpaused();
     void set_level_up(){level_up_time += 120000;}
-    void set_initial_lvTime(){level_up_time = 0;}
 
     int get_ticks();
 

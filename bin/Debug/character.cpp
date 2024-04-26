@@ -93,7 +93,7 @@ void Character::set_character()
 
     is_level_up = 0;
 
-    health = 5;
+    health = 3;
 
     undeadTime = 0;
 
@@ -327,7 +327,7 @@ void Character:: removeBullet(const int& idx)
     }
 }
 
-void Character::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
+void Character::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet)
 {
     for(int i = 0; i <int(p_bullet_list_.size()); i++)
     {
@@ -342,8 +342,8 @@ void Character::handleBullet(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRe
                     p_bullet->set_y_val(mBox.y+CHARACTER_WIDTH/2);
 
                 }
-                p_bullet->render(gRenderer, gBullet, camera);
-                p_bullet->Move(camera);
+                p_bullet->render(gRenderer, gBullet);
+                p_bullet->Move();
             }
             else
             {

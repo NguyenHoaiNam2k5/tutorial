@@ -32,7 +32,7 @@ bulletObject::~bulletObject()
 }
 
 
-void bulletObject::Move(SDL_FRect camera)
+void bulletObject::Move()
 {
 
 //    std::cout << mouseX << " " << mouseY << std::endl;
@@ -73,7 +73,7 @@ void bulletObject::Move(SDL_FRect camera)
     if(Box.x > LEVEL_WIDTH || Box.y > LEVEL_HEIGHT || Box.x < 0 || Box.y < 0) is_move_ = 0;
 }
 
-void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera)
+void bulletObject::render(SDL_Renderer* gRenderer, Ltexture& gBullet)
 {
     gBullet.render(Box.x - camera.x, Box.y - camera.y, gRenderer);
 }

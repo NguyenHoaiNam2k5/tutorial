@@ -112,7 +112,7 @@ int main(int argc, char* argv[])
                 }
 
                 Char1.render(gRenderer, camera, Char, currentClip, gWeapon, gBullet);
-                Char1.handleBullet(gRenderer, gBullet, camera);
+                Char1.handleBullet(gRenderer, gBullet);
 
                 if(SDL_GetTicks() % 400 == 0){
                     threatsObject* p_enemy1 = new threatsObject();
@@ -331,7 +331,6 @@ int main(int argc, char* argv[])
                         {
                             quit = 0;
                             Char1.set_character();
-                            fps_timer.set_initial_lvTime();
                             fps_timer.start();
                             defeated_enemy = 0;
                             enemies.clear();

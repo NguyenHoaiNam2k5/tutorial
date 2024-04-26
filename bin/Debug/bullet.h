@@ -38,9 +38,9 @@ public:
     void set_mouseX_val(){mouseX+=camera.x;}
     void set_mouseY_val(){mouseY+=camera.y;}
 
-    void render(SDL_Renderer* gRenderer, Ltexture& gBullet, SDL_FRect camera);
+    void render(SDL_Renderer* gRenderer, Ltexture& gBullet);
 
-    void Move(SDL_FRect camera);
+    void Move();
 private:
 
     bool is_move_;
