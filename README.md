@@ -71,39 +71,45 @@ Các file ảnh khác lấy từ google hình ảnh.
 **VỀ SOURCE CODE GAME**
 
 - file commonFunc: chứa các hàm cơ bản được dùng xuyên suốt chương trình.
-  - init: khởi tạo window và renderer
-  - close: giải phóng bộ nhớ
-  - checkCollision: kiểm tra va chạm
+  - init: khởi tạo window và renderer (tham khảo trên lazyFoo)
+  - close: giải phóng bộ nhớ (tham khảo trên lazyFoo)
+  - checkCollision: kiểm tra va chạm (tham khảo trên phattrienphanmem123az)
   - checkCollision2: xử lí va chạm của nhân vật
   - timX, timY: tìm tọa độ của điểm thẳng hàng với 2 điểm cho trước
 - file const.h: include thư viện và khai báo các hằng số
-- file texture: quản lý các texture, khởi tạo, tải lên và giải phóng.
-- file imgTimer: xử lý thời gian, dùng để tính thời gian cho đồng hồ.
-- file enemies: quản lý quái vật: khởi tạo, di chuyển, hiển thị, giải phóng.
+- file texture: quản lý các texture, khởi tạo, tải lên và giải phóng.(tham khảo trên lazyFoo)
+- file imgTimer: xử lý thời gian, dùng để tính thời gian cho đồng hồ.(tham khảo trên phattrienphanmem123az)
+- file enemies: quản lý quái vật: khởi tạo, di chuyển, hiển thị, giải phóng. (tham khảo trên phattrienphanmem123az)
 - file bullet: quản lý đạn: bắn theo hướng của chuột.
 - file weapon: quản lý vũ khí: quay theo hướng của chuột.
 - file character: quản lý nhân vật
-  - xử lý bắn đạn
+  - xử lý di chuyển và render nhân vật (tham khảo trên lazyFoo)
+  - xử lý bắn đạn (tham khảo trên phattrienphanmem123az)
   - quản lý số lượng đạn và mạng
   - xử lý lên level
 - file load_image:
   - khai báo các texture
-  - load các texture từ các file có sẵn (hàm loadMedia)
-  - giải phóng bộ nhớ (hàm Free)
+  - load các texture từ các file có sẵn (hàm loadMedia) (tham khảo trên lazyFoo)
+  - giải phóng bộ nhớ (hàm Free) (tham khảo trên lazyFoo)
 - file main:
   - dòng 42 đến 60: render title screen
   - dòng 76 đến 357: game loop
-    - dòng 86 đến 97: xử lý sự kiện bàn phím và chuột.
-    - dòng 99 đến 115: set các chỉ số cho nhân vật, xử lý bắn đạn và render bản đồ.
+    - dòng 86 đến 97: xử lý sự kiện bàn phím và chuột. (tham khảo trên lazyFoo)
+    - dòng 99 đến 115: set các chỉ số cho nhân vật, xử lý bắn đạn và render bản đồ.(tham khảo trên lazyFoo)
     - dòng 117 đến 139: tạo ra quái vật
     - dòng 141 đến 199: giải phóng bộ nhớ sau khi quái vật bị tiêu diệt và xử lý sự kiện va chạm giữa player với quái vật.
-    - dòng 201 đến 236: xử lý sự kiện va chạm giữa đạn của player và quái vật
-    - dòng 238 đến 289: render các chỉ số health, bullet và đồng hồ
-    - dòng 293 đến 302: xử lý sự kiện level up
-    - dòng 304 đến 308: render thanh kinh nghiệm
-    - dòng 309 đến 345: xử lý sự kiện thắng thua
-    - dòng 347 đến 356: update screen và chuyển đến frame tiếp theo của character
-    - dòng 359 đến 374: giải phóng bộ nhớ
+    - dòng 201 đến 236: xử lý sự kiện va chạm giữa đạn của player và quái vật.(tham khảo trên phattrienphanmem123az)
+    - dòng 238 đến 289: render các chỉ số health, bullet và đồng hồ.
+    - dòng 293 đến 302: xử lý sự kiện level up.
+    - dòng 304 đến 308: render thanh kinh nghiệm.
+    - dòng 309 đến 345: xử lý sự kiện thắng thua.
+    - dòng 347 đến 356: update screen và chuyển đến frame tiếp theo của character.
+    - dòng 359 đến 374: giải phóng bộ nhớ.
+
+Link tham khảo:
+- phattrienphanmem123az: https://phattrienphanmem123az.com/lap-trinh-game-c-p2; https://phattrienphanmem123az.com/lap-trinh-game-cpp/page/2
+
+- lazyFoo: https://lazyfoo.net/tutorials/SDL/index.php
 
 
 
