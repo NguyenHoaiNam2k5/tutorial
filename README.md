@@ -1,5 +1,7 @@
 **20 MINUTES TILL DAWN**
 
+Thử nghiệm game: https://drive.google.com/drive/u/0/folders/19B7RXduK3KnQKBe6l_1yT526CLVZTuPl
+
 **GIỚI THIỆU GAME**
 
 20 minutes till dawn là một tựa game sinh tồn. Bạn sẽ phải sinh tồn giữa một mê cung đầy quái vật trong thời gian 20 phút. Vượt qua được 20 phút đó, bình minh sẽ lên và bạn đã sinh tồn thành công.
